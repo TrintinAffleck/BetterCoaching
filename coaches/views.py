@@ -35,9 +35,9 @@ def coaches(request):
 
 def coach(request,pk):
     coachObj = None
-    for coach in coaches_list:
-        if coach['name'].lower() == pk:
-            coachObj = coach
+    for i in coaches_list:
+        if i['name'].lower() == pk.lower():
+            coachObj = i
     if coachObj == None:
         return HttpResponse("Coach not found!")
     return render(request,'coach.html',{'coachObj' : coachObj})

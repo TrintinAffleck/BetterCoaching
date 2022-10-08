@@ -13,7 +13,7 @@
     <h1>Coaches</h1>
     <ul>
       {% for coach in coaches %}
-        <li>Name:{{coach.name}}</li>
+        <li>Name:<a href="{% url 'coach' coach.name %}">{{coach.name}}</a></li>
         <li>About: {{coach.description}}</li>
         <li>ID: {{coach.id}}</li>
       {% endfor %}
