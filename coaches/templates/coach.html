@@ -9,9 +9,14 @@
 <body>
   {% extends 'index.html' %}
   {% block content %}
-  <h1>{{coachObj.name}} Coach Page</h1>
+  <h1>{{coach.name}} Coach Page</h1>
+  <hr>
+      {% for rank in coach.rank.all %}
+        <span style="border:1px solid grey;">{{rank}}</span>
+      {% endfor %}
+  <hr>
   <br>
-  <p>Body: {{coachObj.body}}</p>
+  <p>Body: {{coach.body}}</p>
   {% endblock content %}
 </body>
 </html>

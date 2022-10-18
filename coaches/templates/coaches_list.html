@@ -11,15 +11,24 @@
 
   {% block content %}
     <h1>Coaches</h1>
-    <ul>
-      {% for coach in coaches %}
-        <li>Name:<a href="{% url 'coach' coach.id %}">{{coach.name}}</a></li>
-        <li>About:<a href="{% url 'coach' coach.id %}">{{coach.body}}</a></li>
-        <br>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Rank</th>
+        <th>Review Total</th>
+        <th>Review Rating</th>
+      </tr>
+      
+      {% for coach in coaches.all %}
+        <tr>
+          <td>{{coach.name}}</td>
+          <td>{{coach.rank.all}}</td>
+          <td>{{coach.rating_total}}</td>
+          <td>{{coach.rating_ratio}}</td>
+          <td><a href="{% url 'coach' coach.id %}">Coach</a></td>
+        </tr>
       {% endfor %}
-    </ul>
-
-
+    </table>
   {% endblock content %}
   
 </body>
