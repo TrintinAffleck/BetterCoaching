@@ -35,7 +35,7 @@ class Rank(models.Model):
         ('Bronze','Bronze'),
         ('Silver','Silver'),
         ('Gold','Gold'),
-        ('Plat','Platinum'),
+        ('Platinum','Platinum'),
         ('Diamond','Diamond'),
         ('Master','Master Tier'),
         ('GM','Grandmaster'),
