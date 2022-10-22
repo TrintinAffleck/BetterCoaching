@@ -21,11 +21,10 @@
       
       {% for coach in coaches.all %}
         <tr>
-          <td>{{coach.name}} </td>
+          <td><a href="{% url 'coach' coach.id %}">{{coach.name}}</a></td>
           <td>{{coach.rank.all}} </td>
           <td>{{coach.rating_total}} </td>
           <td>{{coach.rating_ratio}}% </td>
-          <td><a href="{% url 'coach' coach.id %}">Coach</a></td>
         </tr>
       {% endfor %}
     </table>

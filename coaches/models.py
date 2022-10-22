@@ -38,8 +38,8 @@ class Rank(models.Model):
         ('Platinum','Platinum'),
         ('Diamond','Diamond'),
         ('Master','Master Tier'),
-        ('GM','Grandmaster'),
-        ('Chall','Challenger'),
+        ('Grandmaster','Grandmaster'),
+        ('Challenger','Challenger'),
     )
 
     DIVISIONS = (
@@ -51,6 +51,7 @@ class Rank(models.Model):
     )
     current_rank = models.CharField(default = 'UNRANKED',max_length = 100, choices = RANKS)
     current_division = models.CharField(default = ' ',max_length = 50, choices = DIVISIONS, blank = True) 
+    
     def __str__(self) -> str:
-        return self.current_rank
+        return self.current_rank + " " + self.current_division
 
