@@ -9,7 +9,7 @@
 <body>
     <h1>Main Page</h1>
     {% include 'nav-bar.html' %}
-
+    <a href="{% url 'add-coach' %}">Add Coach</a>
     {% block content %}
 
     {% endblock content%}

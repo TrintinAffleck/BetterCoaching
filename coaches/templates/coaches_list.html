@@ -17,6 +17,7 @@
         <th>Rank</th>
         <th>Review Total</th>
         <th>Review Rating</th>
+        <th>Date Joined</th>
       </tr>
       
       {% for coach in coaches.all %}
@@ -25,6 +26,7 @@
           <td>{{coach.rank.all}} </td>
           <td>{{coach.rating_total}} </td>
           <td>{{coach.rating_ratio}}% </td>
+          <td>{{coach.created_date}}</td>
         </tr>
       {% endfor %}
     </table>

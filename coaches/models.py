@@ -11,7 +11,7 @@ class Coach(models.Model):
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                           primary_key = True, editable = False)
     rank = models.ManyToManyField('Rank',blank = True)
-    
+
     def __str__(self) -> str:
         return self.name
 
@@ -51,7 +51,7 @@ class Rank(models.Model):
     )
     current_rank = models.CharField(default = 'UNRANKED',max_length = 100, choices = RANKS)
     current_division = models.CharField(default = ' ',max_length = 50, choices = DIVISIONS, blank = True) 
-    
+
     def __str__(self) -> str:
         return self.current_rank + " " + self.current_division
 
