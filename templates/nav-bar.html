@@ -9,9 +9,12 @@
 <body>
   <nav class="menu">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Coaches</a></li>
-        <li><a href="#">Contact</a></li>
+        <div class="header">
+          <div class="header-links">
+            <li><a href="{% url 'coaches'%}">Home</a></li>
+            <li><a href="{% url 'coaches'%}">Coaches</a></li>
+          </div>
+        </div>
       </ul>
     </nav>
 </body>

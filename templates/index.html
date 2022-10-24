@@ -7,11 +7,10 @@
     <title>Better Coaching</title>
 </head>
 <body>
-    <h1>Main Page</h1>
+    <h1>Welcome to better Coaching</h1>
     {% include 'nav-bar.html' %}
-    <a href="{% url 'add-coach' %}">Add Coach</a>
     {% block content %}
-
+    <a href="{% url 'add-coach' %}">Add Coach</a>
     {% endblock content%}
     <footer>Footer</footer>
 </body>
