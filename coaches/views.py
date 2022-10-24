@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .forms import CoachForm
 from .models import Coach
 
+#List of all coaches
+coaches_list = Coach.objects.all()
 
 def coaches(request):
     coach_obj = Coach.objects.all()
@@ -10,8 +12,11 @@ def coaches(request):
     return render(request,'coaches_list.html', context)
 
 def coach(request,pk):
-    coachObj = Coach.objects.get(id=pk)
-    return render(request,'coach.html',{'coach' : coachObj})
+    for ch in coaches_list:
+        if pk == ch.name:
+            coachObj = Coach.objects.get(name=pk)
+            return render(request,'coach.html',{'coach' : coachObj})
+    return HttpResponse(f"Could not find {pk} coach page")
 
 def addCoach(request):
     form = CoachForm()
@@ -27,13 +32,22 @@ def addCoach(request):
 
 def updateCoach(request, pk):
     coach = Coach.objects.get(id=pk)
-    form = CoachForm(instance=coaches)
+    form = CoachForm(instance=coach)
 
     if request.method == 'POST':
-        form = CoachForm(request.POST, instance=coaches)
+        form = CoachForm(request.POST, instance=coach)
         if form.is_valid():
             form.save()
             return redirect('coaches')
 
-    context = {'form' : form}
+    context = {'form' : form, 'coach' : coach}
     return render(request, 'coach_form.html', context)
+
+def deleteCoach(request, pk):
+    coach = Coach.objects.get(id=pk)
+
+    if request.method == 'POST':
+        coach.delete()
+        return redirect('coaches')
+    context = {'coach' : coach}
+    return render(request,'delete_template.html', context)

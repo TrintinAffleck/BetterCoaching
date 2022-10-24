@@ -10,6 +10,9 @@
   {% extends 'index.html' %}
   {% block content %}
   <h1>{{coach.name}} Coach Page</h1>
+  <h2><a href="{% url 'update-coach' coach.id %}">Edit coach</a></h2>
+  <h2><a href="{% url 'delete-coach' coach.id %}">Delete coach</a></h2>
+  
   <hr>
       {% for rank in coach.rank.all %}
         <span style="border:1px solid grey;">{{rank}}</span>

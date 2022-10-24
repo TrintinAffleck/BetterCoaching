@@ -22,7 +22,7 @@
       
       {% for coach in coaches.all %}
         <tr>
-          <td><a href="{% url 'coach' coach.id %}">{{coach.name}}</a></td>
+          <td><a href="{% url 'coach' coach.name %}">{{coach.name}}</a></td>
           <td>{{coach.rank.all}} </td>
           <td>{{coach.rating_total}} </td>
           <td>{{coach.rating_ratio}}% </td>
