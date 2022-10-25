@@ -8,28 +8,34 @@
 </head>
 <body>
   {% extends 'index.html' %}
-
+  {% load static %}
   {% block content %}
+  <div class="coach-title">
     <h1>Coaches</h1>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Rank</th>
-        <th>Review Total</th>
-        <th>Review Rating</th>
-        <th>Date Joined</th>
-      </tr>
-      
-      {% for coach in coaches.all %}
+  </div>
+    <div class="coaches-table">
+      <table>
         <tr>
-          <td><a href="{% url 'coach' coach.name %}">{{coach.name}}</a></td>
-          <td>{{coach.rank.all}} </td>
-          <td>{{coach.rating_total}} </td>
-          <td>{{coach.rating_ratio}}% </td>
-          <td>{{coach.created_date}}</td>
+          <th>Name</th>
+          <th>Rank</th>
+          <th>Review Total</th>
+          <th>Review Rating</th>
+          <th>Date Joined</th>
         </tr>
-      {% endfor %}
-    </table>
+        
+        <div class="coaches-table-data">
+        {% for coach in coaches.all %}
+          <tr>
+              <td><a href="{% url 'coach' coach.name %}"><img src="{{coach.profile_img.url}}" height="75px" width="75px">{{coach.name}}</a></td>
+              <td>{{coach.rank.all}} </td>
+              <td>{{coach.rating_total}} </td>
+              <td>{{coach.rating_ratio}}% </td>
+              <td>{{coach.created_date}}</td>
+            </tr>
+        {% endfor %}
+        </div>
+      </table>
+    </div>
   {% endblock content %}
   
 </body>
