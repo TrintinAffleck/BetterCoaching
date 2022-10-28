@@ -4,4 +4,4 @@ from django.forms import ModelForm
 class CoachForm(ModelForm):
     class Meta:
         model = Coach
-        fields = ['name', 'body', 'rank']
+        fields = ['name', 'profile_img', 'body', 'rank']

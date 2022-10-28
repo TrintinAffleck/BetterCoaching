@@ -22,7 +22,7 @@ def addCoach(request):
     form = CoachForm()
 
     if request.method == 'POST':
-        form = CoachForm(request.POST)
+        form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('coaches')
@@ -35,7 +35,7 @@ def updateCoach(request, pk):
     form = CoachForm(instance=coach)
 
     if request.method == 'POST':
-        form = CoachForm(request.POST, instance=coach)
+        form = CoachForm(request.POST, request.FILES, instance=coach)
         if form.is_valid():
             form.save()
             return redirect('coaches')

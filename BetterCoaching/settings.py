@@ -128,6 +128,7 @@ STATICFILES_DIRS =[
 
 ]
 
+# MEDIA_ROOT = path.join(BASE_DIR, "static/images")
 MEDIA_ROOT = BASE_DIR / "static/images"
 
 # Default primary key field type

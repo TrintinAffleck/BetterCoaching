@@ -11,7 +11,7 @@ class Coach(models.Model):
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                           primary_key = True, editable = False)
     rank = models.ManyToManyField('Rank',blank = True)
-    profile_img = models.ImageField(null = True, default= 'images/BG_logo.jpg')
+    profile_img = models.ImageField(null = True, default = 'BG_logo.jpg')
 
     def __str__(self) -> str:
         return self.name
