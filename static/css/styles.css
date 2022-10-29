@@ -13,18 +13,12 @@
     padding: 5px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
-}
 .header-links {
     display: flex;
     align-items: center;
+    justify-content: center;
     list-style-type: none;
     margin: 0px;
-    padding: 0px;
+    padding: 10px;
     gap: 16px;
 }
