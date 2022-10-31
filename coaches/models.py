@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
-# Create your models here.
-
+from django.conf import settings
 class Coach(models.Model):
     name = models.CharField(max_length = 250)
     body = models.TextField(max_length =  5000, null = True, blank = True)
@@ -11,7 +10,7 @@ class Coach(models.Model):
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                           primary_key = True, editable = False)
     rank = models.ManyToManyField('Rank',blank = True)
-    profile_img = models.ImageField(null = True, default = 'BG_logo.jpg')
+    profile_img = models.ImageField(null = True, default = F'{settings.MEDIA_ROOT}/BG_logo.jpg')
 
     def __str__(self) -> str:
         return self.name

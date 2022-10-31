@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-  {% extends 'index.html' %}
+  {% extends 'main.html' %}
   {% block content %}
   <h1>{{coach.name}} Coach Page</h1>
   <h2><a href="{% url 'update-coach' coach.id %}">Edit coach</a></h2>

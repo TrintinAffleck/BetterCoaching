@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6)oejbri2y^g3rs4d*5j9sihm7+(m*#!bfq$n8h+vv7saw%mtd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', "127.0.0.1"]
 
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,17 +123,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'images/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
 
 STATICFILES_DIRS =[
-    BASE_DIR / "static"
+    path.join(BASE_DIR, "static")
 
 ]
 
-# MEDIA_ROOT = path.join(BASE_DIR, "static/images")
 MEDIA_ROOT = BASE_DIR / "static/images"
-STATIC_ROOT = path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_ROOT = path.join(BASE_DIR, "staticfiles")
+# MEDIA_ROOT = path.join(BASE_DIR, "static/images")
 
 
 # Default primary key field type
