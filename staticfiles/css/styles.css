@@ -1,0 +1,24 @@
+.coach-title, .coaches-table, .main-title, .logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    padding: 10px;
+    height: default;
+}
+
+.coaches-table .coaches-table-data {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.header-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0px;
+    padding: 10px;
+    gap: 16px;
+}
