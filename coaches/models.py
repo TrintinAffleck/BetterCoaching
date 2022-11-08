@@ -10,11 +10,10 @@ class Coach(models.Model):
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                           primary_key = True, editable = False)
     rank = models.ManyToManyField('Rank',blank = True)
-    profile_img = models.ImageField(null = True, default = F'{settings.MEDIA_ROOT}/BG_logo.jpg')
-
+    profile_img = models.ImageField(null = True, default = 'BG_logo.JPG')
     def __str__(self) -> str:
         return self.name
-
+        
 class Review(models.Model):
     #owner =
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE) #Many to One Relationship
@@ -31,7 +30,7 @@ class Review(models.Model):
         return self.rating_value
 
 class Rank(models.Model):
-    RANKS = (
+    RANKS = [
         ('Bronze','Bronze'),
         ('Silver','Silver'),
         ('Gold','Gold'),
@@ -40,7 +39,7 @@ class Rank(models.Model):
         ('Master','Master Tier'),
         ('Grandmaster','Grandmaster'),
         ('Challenger','Challenger'),
-    )
+    ]
 
     DIVISIONS = (
         ('1','1'),

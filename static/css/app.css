@@ -70,7 +70,7 @@ img {
   pointer-events: all;
 }
 
-.project--thumbnail {
+.coach--thumbnail {
   height: 250px;
   object-fit: cover;
 }
@@ -406,45 +406,50 @@ img {
 }
 
 /*=======================
-  Single Projects
+  Single coachs
 ========================*/
 
-.singleProject .column--1of3 {
+.singlecoach .column--1of3 {
   order: 2;
 }
 
 @media screen and (min-width: 1081px) {
-  .singleProject .column--1of3 {
+  .singlecoach .column--1of3 {
     order: 1;
   }
-  .singleProject .column--2of3 {
+  .singlecoach .column--2of3 {
     order: 2;
   }
 }
 
-.singleProject__toolStack {
+.singlecoach__toolStack {
   margin-top: 2rem;
   margin-bottom: 4rem;
 }
 
-.singleProject__liveLink {
+.singlecoach__liveLink {
   font-weight: 500;
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
 }
 
-.singleProject__liveLink:hover {
+.singlecoach__liveLink:hover {
   font-weight: 500;
   border-bottom: 2px solid var(--color-main);
 }
 
-.singleProject__liveLink i {
+.singlecoach__liveLink i {
   display: inline-block;
   font-size: 1.6rem;
   margin-right: 1rem;
 }
 
-.singleProject__preview {
+.singlecoach__img {
+  width: 200px;
+  height: 200px;
+}
+
+.singlecoach__preview {
   height: 50vh;
   object-fit: cover;
   object-position: top center;
@@ -452,29 +457,29 @@ img {
   border-radius: 0.7rem;
 }
 
-.singleProject__developer {
+.singlecoach {
   font-size: 1.8rem;
   font-weight: 500;
 }
 
-.singleProject__title {
+.singlecoach__title {
   font-size: 3.6rem;
   font-weight: 700;
   color: var(--color-sub);
   margin-bottom: 3rem;
 }
 
-.project__author{
+.coach__author{
   font-size: 1.4rem;
   font-style: italic;
 }
 
-.project--rating{
+.coach--rating{
   margin-bottom: 1.6em;
   margin-top: .5em;
 }
 
-.singleProject__subtitle {
+.singlecoach__subtitle {
   text-transform: uppercase;
   font-size: 2.4rem;
   font-weight: 700;
@@ -483,45 +488,45 @@ img {
 }
 
 /*=======================
-  Projects Page
+  coachs Page
 ========================*/
-.projects > .hero-section {
+.coachs > .hero-section {
   background: var(--color-sub-lighter);
   height: 30vh;
 }
 
-.projects .hero-section__box {
+.coachs .hero-section__box {
   margin-bottom: 2.5rem;
 }
 
-.projects .hero-section__box > h2 {
+.coachs .hero-section__box > h2 {
   color: var(--color-sub);
 }
 
-.projects .hero-section__box > h2 > span {
+.coachs .hero-section__box > h2 > span {
   font-weight: 700;
   color: var(--color-sub);
 }
 
-.projectsList {
+.coachsList {
   margin-top: 8rem;
 }
 
-/*========== Projects ==========*/
+/*========== coachs ==========*/
 
-.project__thumbnail {
+.coach__thumbnail {
   height: 25rem;
   object-fit: cover;
   object-position: top center;
 }
 
-.project__title {
+.coach__title {
   font-size: 2rem;
   font-weight: 700;
   color: var(--color-sub);
 }
 
-.project__info {
+.coach__info {
   margin: 1rem 0;
   font-size: 1.4rem;
   text-align: justify;

@@ -1,25 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+{% extends 'main.html' %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{coach.name}} - Coach Page</title>
 </head>
 <body>
-  {% extends 'main.html' %}
   {% block content %}
-  <h1>{{coach.name}} Coach Page</h1>
-  <h2><a href="{% url 'update-coach' coach.id %}">Edit coach</a></h2>
-  <h2><a href="{% url 'delete-coach' coach.id %}">Delete coach</a></h2>
-  
-  <hr>
-      {% for rank in coach.rank.all %}
-        <span style="border:1px solid grey;">{{rank}}</span>
-      {% endfor %}
-  <hr>
-  <br>
-  <p>Body: {{coach.body}}</p>
+  <!-- Main Section -->
+  <main class="singleCoach my-md">
+    <div class="container">
+      <div class="layout">
+
+        <div class="column column--2of3">
+          <div class="singleCoach__img">
+          <img class="singleCoach__preview" src="{{coach.profile_img.url}}" alt="portfolio thumbnail" />
+          </div>
+          <a href="profile.html" class="singleCoach"></a>
+          <h2 class="singleCoach__title">Coach {{coach.name}}</h2>
+          <h5 class="singleCoach__subtitle">About the Coach</h5>
+          <div class="singleCoach__info">
+            {{coach.body}}
+          </div>
+
+          <div class="comments">
+            <h3 class="singleCoach__subtitle">Feedback</h3>
+            <h5 class="project--rating">
+              {{coach.rating_ratio}}% Postitive Feedback ({{coach.rating_total}} Vote{{coach.rating_total|pluralize:"s"}})
+            </h5>
+
+            <form class="form" action="#" method="POST">
+              <!-- Textarea -->
+              <div class="form__field">
+                <label for="formInput#textarea">Comments: </label>
+                <textarea class="input input--textarea" name="message" id="formInput#textarea"
+                  placeholder="Write your comments here..."></textarea>
+              </div>
+              <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+            </form>
+            <div class="commentList">
+              <div class="comment">
+                <a href="profile.html">
+                  <img class="avatar avatar--md"
+                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg" alt="user" />
+                </a>
+                <div class="comment__details">
+                  <a href="profile.html" class="comment__author">Sulamita Ivanov</a>
+                  <p class="comment__info">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit alias numquam perferendis
+                    mollitia minus minima exercitationem possimus ab deserunt qui, soluta iusto doloribus eveniet
+                    similique consequuntur ratione, dignissimos ut magni laborum quo.
+                  </p>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
   {% endblock content %}
 </body>
 </html>

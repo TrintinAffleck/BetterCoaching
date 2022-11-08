@@ -7,13 +7,28 @@
     <title>Better Coaching</title>
 </head>
 <body>
-  <nav class="menu">
-      <ul>
-          <div class="header-links">
-            <li><a href="{% url 'coaches'%}">Home</a></li>
-            <li><a href="{% url 'coaches'%}">Coaches</a></li>
-          </div>
-      </ul>
-    </nav>
+  {% load static %}
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container container--narrow">
+      <a href="{% url 'coaches' %}" class="header__logo">
+        <img src="{% static 'images/BG_logo.jpg' %}" alt="BetterCoaching Logo" />
+      </a>
+      <nav class="header__nav">
+        <input type="checkbox" id="responsive-menu" />
+        <label for="responsive-menu" class="toggle-menu">
+          <span>Menu</span>
+          <div class="toggle-menu__lines"></div>
+        </label>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="{% url 'coaches' %}">Coaches</a></li>
+          <li class="header__menuItem"><a href="">Inbox</a></li>
+          <li class="header__menuItem"><a href="">My Account</a></li>
+          <li class="header__menuItem"><a href="{% url 'add-coach' %}" class="btn btn--sub">Add Coach</a></li>
+          <li class="header__menuItem"><a href="" class="btn btn--sub">Login/Sign Up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 </body>
 </html>

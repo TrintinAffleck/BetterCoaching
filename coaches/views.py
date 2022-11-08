@@ -22,10 +22,14 @@ def addCoach(request):
     form = CoachForm()
 
     if request.method == 'POST':
+        print(request.POST)
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            print("Coach Added")
             return redirect('coaches')
+        else:
+            print("form is invalid")
 
     context = {'form' : form}
     return render(request, 'coach_form.html', context)
