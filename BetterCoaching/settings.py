@@ -131,7 +131,7 @@ STATICFILES_DIRS =[
 
 ]
 
-MEDIA_ROOT = BASE_DIR / "static/images"
+MEDIA_ROOT = BASE_DIR / "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # STATIC_ROOT = path.join(BASE_DIR, "staticfiles")
 # MEDIA_ROOT = path.join(BASE_DIR, "static/images")

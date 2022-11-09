@@ -22,6 +22,8 @@
           <h2 class="singleCoach__title">Coach {{coach.name}}</h2>
           <h5 class="singleCoach__subtitle">About the Coach</h5>
           <div class="singleCoach__info">
+            <a href ="{% url 'update-coach' coach.name %}">Edit Coach</a>
+            <br>
             {{coach.body}}
           </div>
 

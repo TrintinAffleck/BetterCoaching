@@ -22,20 +22,17 @@ def addCoach(request):
     form = CoachForm()
 
     if request.method == 'POST':
-        print(request.POST)
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            print("Coach Added")
+            print(f"{form['name']}Coach Added")
             return redirect('coaches')
-        else:
-            print("form is invalid")
 
     context = {'form' : form}
     return render(request, 'coach_form.html', context)
 
 def updateCoach(request, pk):
-    coach = Coach.objects.get(id=pk)
+    coach = Coach.objects.get(name=pk)
     form = CoachForm(instance=coach)
 
     if request.method == 'POST':

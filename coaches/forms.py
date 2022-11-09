@@ -6,9 +6,9 @@ class CoachForm(ModelForm):
     class Meta:
         model = Coach
         fields = ['name', 'profile_img', 'body', 'rank']
-        widgets = {
-            'rank': forms.widgets.Select(),
-        }
+        # widgets = {
+        #     'rank': forms.widgets.ChoiceWidget(),
+        # }
 
     def __init__(self, *args, **kwargs):
         super(CoachForm, self).__init__(*args, **kwargs)
@@ -20,5 +20,7 @@ class CoachForm(ModelForm):
             if name == 'body':
                 field.widget.attrs.update({'class':'input','placeholder':'Enter Description'})
                 continue
+            if name == 'rank':
+                field.widget.attrs.update({'class':'input'})
             
             
