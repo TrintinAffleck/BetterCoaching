@@ -1,7 +1,9 @@
 from django.db import models
 import uuid
-from django.conf import settings
+from users.models import Profile
+
 class Coach(models.Model):
+    owner = models.OneToOneRel(Profile, 'Coach', 'CoachOwner')
     name = models.CharField(max_length = 250)
     body = models.TextField(max_length =  5000, null = True, blank = True)
     rating_total = models.IntegerField(default = 0, null = True, blank = True)
@@ -11,6 +13,7 @@ class Coach(models.Model):
                           primary_key = True, editable = False)
     rank = models.ManyToManyField('Rank',blank = True)
     profile_img = models.ImageField(null = True, default = 'BG_logo.JPG')
+    
     def __str__(self) -> str:
         return self.name
         

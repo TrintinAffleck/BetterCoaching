@@ -37,6 +37,7 @@
         <div class="grid grid--three">
           <!-- Card Sections -->
           {% for coach in coaches.all %}
+          {% if coach.owner.is_coach %}
           <div class="column">
             <div class="card coach">
               <a href="{% url 'coach' coach.name %}" class="coach">
@@ -58,6 +59,7 @@
               </a>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
 
         </div>

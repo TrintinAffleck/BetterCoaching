@@ -24,6 +24,8 @@
           <div class="singleCoach__info">
             <a href ="{% url 'update-coach' coach.name %}">Edit Coach</a>
             <br>
+            <a href ="{% url 'delete-coach' coach.name %}">Delete Coach</a>
+            <br>
             {{coach.body}}
           </div>
 

@@ -25,7 +25,7 @@ def addCoach(request):
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            print(f"{form['name']}Coach Added")
+            print(f"{type(form['name'])}Coach Added")
             return redirect('coaches')
 
     context = {'form' : form}
@@ -45,7 +45,7 @@ def updateCoach(request, pk):
     return render(request, 'coach_form.html', context)
 
 def deleteCoach(request, pk):
-    coach = Coach.objects.get(id=pk)
+    coach = Coach.objects.get(name=pk)
 
     if request.method == 'POST':
         coach.delete()
