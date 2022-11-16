@@ -1,73 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Better Coaching - Coaches</title>
-</head>
-<body>
-  {% extends 'main.html' %}
-  {% load static %}
-  {% block content %}
-  <!-- Main Section -->
-  <main class="coaches">
-    <section class="hero-section text-center">
-      <div class="container container--narrow">
-        <div class="hero-section__box">
-          <h2>Search for <span>Coaches</span></h2>
-        </div>
-
-        <div class="hero-section__search">
-          <form class="form" action="#" method="get">
-            <div class="form__field">
-              <label for="formInput#search">Search By Coaches </label>
-              <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by Coach Name" />
-            </div>
-
-            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
-          </form>
-        </div>
-      </div>
-    </section>
-    <!-- Search Result: CoachList -->
-    <section class="CoachesList">
-      <div class="container">
-        <div class="grid grid--three">
-          <!-- Card Sections -->
-          {% for coach in coaches.all %}
-          {% if coach.owner.is_coach %}
-          <div class="column">
-            <div class="card coach">
-              <a href="{% url 'coach' coach.name %}" class="coach">
-                <img class="coach__thumbnail" src="{{coach.profile_img.url}}" alt="coach thumbnail" />
-                <div class="card__body">
-                  <h3 class="coach__title">{{coach.name}}</h3>
-                  <p class="coach--rating">
-                    <span style="font-weight: bold;">{{coach.rating_ratio}}%</span> Positive
-                    <span style="font-weight: bold;">{{coach.rating_total}}</span> Review{{coach.rating_total|pluralize:"s"}}
-                  </p>
-                  <div class="coach__tags">
-                    {% for rank in coach.rank.all %}
-                    <span class="tag tag--pill tag--main">
-                      Rank: {{rank}}
-                    </span>
-                    {% endfor %}
-                  </div>
-                </div>
-              </a>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Better Coaching - Coaches</title>
+  </head>
+  <body>
+    {% extends 'main.html' %} {% load static %} {% block content %}
+    <!-- Main Section -->
+    <main class="coaches">
+      <section class="hero-section text-center">
+        <div class="container container--narrow">
+          <div class="hero-section__box">
+            <h2>Search for <span>Coaches</span></h2>
           </div>
-          {% endif %}
-          {% endfor %}
 
+          <div class="hero-section__search">
+            <form class="form" action="#" method="get">
+              <div class="form__field">
+                <label for="formInput#search">Search By Coaches </label>
+                <input
+                  class="input input--text"
+                  id="formInput#search"
+                  type="text"
+                  name="text"
+                  placeholder="Search by Coach Name"
+                />
+              </div>
+
+              <input
+                class="btn btn--sub btn--lg"
+                type="submit"
+                value="Search"
+              />
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
-  {% endblock content %}
-  
-</body>
+      </section>
+      <!-- Search Result: CoachList -->
+      <section class="CoachesList">
+        <div class="container">
+          <div class="grid grid--three">
+            <!-- Card Sections -->
+            {% for coach in coaches.all %} {% if coach.user_type.is_coach %}
+            <div class="column">
+              <div class="card coach">
+                <a href="{% url 'coach' coach.name %}" class="coach">
+                  <img
+                    class="coach__thumbnail"
+                    src="{{coach.profile_img.url}}"
+                    alt="coach thumbnail"
+                  />
+                  <div class="card__body">
+                    <h3 class="coach__rating">{{coach.name}}</h3>
+                    {% if coach.accomplishments %}
+                    <p>{{coach.accomplishments}}</p>
+                    {% endif %}
+                    <p class="coach--rating">
+                      <span style="font-weight: bold"
+                        >{{coach.rating_ratio}}%</span
+                      >
+                      Positive
+                      <span style="font-weight: bold"
+                        >{{coach.rating_total}}</span
+                      >
+                      Review{{coach.rating_total|pluralize:"s"}}
+                    </p>
+                    <div class="coach__tags">
+                      {% for rank in coach.rank.all %}
+                      <span class="tag tag--pill tag--main">
+                        Rank: {{rank}}
+                      </span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endif %} {% endfor %}
+          </div>
+        </div>
+      </section>
+    </main>
+    {% endblock content %}
+  </body>
 </html>
-

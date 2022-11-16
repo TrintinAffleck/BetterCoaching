@@ -129,13 +129,10 @@ MEDIA_URL = '/images/'
 
 STATICFILES_DIRS =[
     path.join(BASE_DIR, "static")
-
 ]
 
-MEDIA_ROOT = BASE_DIR / "static/"
+MEDIA_ROOT = BASE_DIR / "static/images"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-# STATIC_ROOT = path.join(BASE_DIR, "staticfiles")
-# MEDIA_ROOT = path.join(BASE_DIR, "static/images")
 
 
 # Default primary key field type

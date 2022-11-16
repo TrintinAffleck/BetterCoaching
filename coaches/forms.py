@@ -5,10 +5,11 @@ from django import forms
 class CoachForm(ModelForm):
     class Meta:
         model = Coach
-        fields = ['name', 'profile_img', 'body', 'rank']
-        # widgets = {
-        #     'rank': forms.widgets.ChoiceWidget(),
-        # }
+        fields = ['name', 'profile_img', 'rank', 'body','accomplishments']
+        widgets = {
+            'rank': forms.widgets.Select(),
+
+        }
 
     def __init__(self, *args, **kwargs):
         super(CoachForm, self).__init__(*args, **kwargs)
@@ -20,7 +21,7 @@ class CoachForm(ModelForm):
             if name == 'body':
                 field.widget.attrs.update({'class':'input','placeholder':'Enter Description'})
                 continue
-            if name == 'rank':
+            else:
                 field.widget.attrs.update({'class':'input'})
             
             

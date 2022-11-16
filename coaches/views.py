@@ -12,8 +12,8 @@ def coaches(request):
     return render(request,'coaches_list.html', context)
 
 def coach(request,pk):
-    for ch in coaches_list:
-        if pk == ch.name:
+    for coach in coaches_list:
+        if pk == coach.name:
             coachObj = Coach.objects.get(name=pk)
             return render(request,'coach.html',{'coach' : coachObj})
     return HttpResponse(f"Could not find {pk} coach page")
@@ -38,8 +38,11 @@ def updateCoach(request, pk):
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES, instance=coach)
         if form.is_valid():
+            print("Form is valid")
             form.save()
             return redirect('coaches')
+        else:
+            print(f"Form : {form}")
 
     context = {'form' : form, 'coach' : coach}
     return render(request, 'coach_form.html', context)

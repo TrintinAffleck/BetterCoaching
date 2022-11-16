@@ -20,6 +20,9 @@
 .card__body,
 .card__header {
   padding: 2rem 2.5rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .card__header {
