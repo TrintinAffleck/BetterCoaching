@@ -53,20 +53,16 @@
                     alt="coach thumbnail"
                   />
                   <div class="card__body">
-                    <h3 class="coach__rating">{{coach.name}}</h3>
-                    {% if coach.accomplishments %}
-                    <p>{{coach.accomplishments}}</p>
-                    {% endif %}
-                    <p class="coach--rating">
-                      <span style="font-weight: bold"
-                        >{{coach.rating_ratio}}%</span
-                      >
-                      Positive
-                      <span style="font-weight: bold"
-                        >{{coach.rating_total}}</span
-                      >
+                    <h3 class="coach__rating" style="margin-bottom: 8px;">{{coach.name}}</h3>
+                    <p>{{coach.headline}}</p>
+                    <div class="coach--rating">
+                      <span style="font-weight: bold">{{coach.rating_ratio}}%</span>
+                      Positive Reviews
+                    </div>
+                    <div class="coach--rating">
+                      <span style="font-weight: bold">{{coach.rating_total}}</span>
                       Review{{coach.rating_total|pluralize:"s"}}
-                    </p>
+                    </div>
                     <div class="coach__tags">
                       {% for rank in coach.rank.all %}
                       <span class="tag tag--pill tag--main">

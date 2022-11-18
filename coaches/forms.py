@@ -1,15 +1,17 @@
-from .models import Coach,Rank
-from django.forms import ModelForm, widgets
+from .models import Coach, Rank
+from django.forms import ModelForm
 from django import forms
+
 
 class CoachForm(ModelForm):
     class Meta:
         model = Coach
-        fields = ['name', 'profile_img', 'rank', 'body','accomplishments']
-        widgets = {
-            'rank': forms.widgets.Select(),
+        fields = ['name',
+                  'headline',
+                  'profile_img',
+                  'rank',
+                  'body']
 
-        }
 
     def __init__(self, *args, **kwargs):
         super(CoachForm, self).__init__(*args, **kwargs)

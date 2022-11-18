@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.db.models.signals import post_save
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE)
@@ -15,4 +16,7 @@ class Profile(models.Model):
                           primary_key = True, editable = False)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.name)
+
+class UserUpdated(sender, instance, created, **kwargs):
+    print("User Updated")

@@ -456,8 +456,7 @@ img {
 }
 
 .coach--rating {
-  margin-bottom: 1.6em;
-  margin-top: 0.5em;
+  padding: 3px;
 }
 
 .singlecoach__subtitle {

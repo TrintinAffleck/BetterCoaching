@@ -56,8 +56,10 @@
                 <div class="coachInfo">
                     <h3 class="coachInfo__subtitle">Accomplishments</h3>
                     <div class="coachInfo__otherSkills">
+                        {% for acp in coach.accomplishments_set.all %}
                         <span class="tag tag--pill tag--sub tag--lg">
-                            <small>{{coach.accomplishments}}</small>
+                            <small>{{acp|slice:"15"}}</small>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
