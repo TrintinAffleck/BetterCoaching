@@ -1,0 +1,31 @@
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from .models import Profile
+
+@receiver(post_save, sender=User)
+def UserUpdated(sender, instance, created, **kwargs):
+    if created == False:
+        print("User Updated")
+        print(f"Username: {instance}")
+        return
+    print("User Added")
+    print(f"Username: {instance}")
+
+@receiver(post_save, sender=User)
+def CreateProfile(sender, instance, created, **kwargs):
+    if created == True:
+        user = instance
+        profile = Profile.objects.create(
+            user = user,
+            name = user,
+            email = user.email,
+            is_coach = False,
+            # discord_link = Profile.discord_link,
+        )
+
+@receiver(post_delete, sender=Profile)
+def ProfileDeleted(sender, instance, **kwargs):
+    user = instance.user
+    user.delete()
+    print(f"Profile {instance} deleted")

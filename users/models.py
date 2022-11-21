@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-from django.db.models.signals import post_save
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, null = True, on_delete = models.CASCADE)
+    user = models.OneToOneField(User, null = True, on_delete = models.CASCADE, unique=True)
     name = models.CharField(max_length = 100, blank = True, null = True)
+    email = models.CharField(max_length = 100, blank = True, null = True)
     is_coach = models.BooleanField()
     if is_coach == True:
         profile_img = models.ImageField(null = True, blank = True, upload_to = 'profiles/', default = 'profiles/user-default.png')
@@ -17,6 +17,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.name)
-
-class UserUpdated(sender, instance, created, **kwargs):
-    print("User Updated")
