@@ -1,6 +1,5 @@
 from .models import Coach, Rank
 from django.forms import ModelForm
-from django import forms
 
 
 class CoachForm(ModelForm):

@@ -4,23 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description"
-    content="An coaching platform for league of legends coaching." />
+  <meta
+    name="description"
+    content="An coaching platform for league of legends coaching."
+  />
 
   <!-- Styles -->
-  <link rel="stylesheet" type="text/css" href="{% static 'uikit/styles/uikit.css' %}" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'uikit/styles/uikit.css' %}"
+  />
   <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}" />
 
   <!-- Highlight.js Styles -->
-  <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/night-owl.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/night-owl.min.css"
+  />
 
   <title>BetterCoaching - Home</title>
-<body>
-  {% include 'nav-bar.html' %}
-  {% block content %}
-    <h1>Welcome to better Coaching</h1>
-    <footer>Footer</footer>
-  {% endblock content %}
-</body>
+  <body>
+    {% include 'nav-bar.html' %} 
+    {% if messages %} 
+    {% for message in messages %}
+    <div class="alert  alert--{{message.tags}}">
+      <p class="alert__message">{{message}}</p>
+      <button class="alert__close">⨯</button>
+    </div>
+    {% endfor %} 
+    {% endif %} 
+    {% block content %} 
+    {% endblock content %}
+  </body>
+  <script src="{% static 'uikit/app.js' %}"></script>
 </html>

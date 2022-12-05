@@ -18,7 +18,6 @@
                         <img class="avatar avatar--xl"
                             src="{{coach.profile_img.url}}">
                         <h2 class="coach__name">{{coach.name}}</h2>
-                        <h3><a href="{% url 'update-coach' coach.name %}">Edit coach</a></h3>
                         <!-- Rank -->
                         {% for rank in coach.rank.all %}
                         <p class="coach__title" style="font-weight: bold; font-size: x-large;">{{rank}}</p>
@@ -35,13 +34,18 @@
                         <!-- <ul class="coach__social">
                             <li>
                                 <a title="Discord" href="#" target="_blank"><i
-                                        class="im im-discord"></i></a>
-                                {{coach.discord_link}}
-                            </li>
-                        </ul> -->
-                        
-                        <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em;">Send Message
-                        </a>
+                                    class="im im-discord"></i></a>
+                                    {{coach.discord_link}}
+                                </li>
+                            </ul> -->
+                        {% if user.is_authenticated %}
+                        {% if user.profile.is_coach and user.username.lower == coach.name.lower %}
+                        <h3><a href="{% url 'update-coach' coach.name %}">Edit coach</a></h3>
+                        {% else %}
+                        <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em;">Send Message</a>
+                        {% endif %}
+                        {% endif %}
+
                     </div>
                 </div>
             </div>
