@@ -18,11 +18,25 @@ def CreateProfile(sender, instance, created, **kwargs):
         user = instance
         profile = Profile.objects.create(
             user = user,
+            username = user.username,
             name = user,
             email = user.email,
             is_coach = False,
-            # discord_link = Profile.discord_link,
         )
+
+'''Updates the user information if the profile is changed.'''
+@receiver(post_save,sender=Profile)
+def UpdateUser(sender, instance, created, **kwargs):
+    profile = instance
+    user = profile.user
+    if created == False:
+        user.first_name = profile.name
+        if profile.username != None:
+            user.username = profile.username
+        else:
+            user.username = profile.user
+        user.email = profile.email
+        user.save()
 
 @receiver(post_delete, sender=Profile)
 def ProfileDeleted(sender, instance, **kwargs):

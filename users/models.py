@@ -4,6 +4,7 @@ import uuid
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE, unique=True)
+    username = models.CharField(max_length = 100, blank = True, null = True)
     name = models.CharField(max_length = 100, blank = True, null = True)
     email = models.CharField(max_length = 100, blank = True, null = True)
     is_coach = models.BooleanField()

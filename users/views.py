@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from coaches.models import Coach
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UpdateAccountForm
 
 def profiles(request):
     profiles = Profile.objects.all
@@ -69,5 +69,8 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def userAccount(request):
-    context = {}
+    page = 'account'
+    form = UpdateAccountForm()
+    
+    context = {'page': page, 'form':form}
     return render(request, 'users/account.html', context)
