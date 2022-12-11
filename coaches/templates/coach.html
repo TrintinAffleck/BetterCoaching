@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{coach.name}} - Coach Page</title>
+    <title>{{coach.display_name}} - Coach Page</title>
 </head>
 <body>
   {% block content %}
@@ -17,7 +17,7 @@
                     <div class="card__body coach">
                         <img class="avatar avatar--xl"
                             src="{{coach.profile_img.url}}">
-                        <h2 class="coach__name">{{coach.name}}</h2>
+                        <h2 class="coach__name">{{coach.display_name}}</h2>
                         <!-- Rank -->
                         {% for rank in coach.rank.all %}
                         <p class="coach__title" style="font-weight: bold; font-size: x-large;">{{rank}}</p>
@@ -39,8 +39,8 @@
                                 </li>
                             </ul> -->
                         {% if user.is_authenticated %}
-                        {% if user.profile.is_coach and user.username.lower == coach.name.lower %}
-                        <h3><a href="{% url 'update-coach' coach.name %}">Edit coach</a></h3>
+                        {% if user.profile.is_coach and user.username.lower == coach.display_name.lower %}
+                        <h3><a href="{% url 'update-coach' coach.display_name %}">Edit coach</a></h3>
                         {% else %}
                         <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em;">Send Message</a>
                         {% endif %}

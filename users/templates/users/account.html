@@ -24,8 +24,9 @@
   <body>
     <main>
       {% block content %}
+      <div class="update_account">
       <h2>Account Page</h2>
-      <form action="{% url 'account' %}" method="POST" class="form auth__form">
+      <form action="{% url 'account' %}" method="POST" class="form auth__form", enctype="multipart/form-data">
         {% csrf_token %} 
         {% for field in form %}
         <div class="form__field">
@@ -43,7 +44,7 @@
         <div class="auth__actions">
           <input class="btn btn--sub btn--lg" type="submit" value="Update Account" />
         </div>
-
+      </div>
       </form>
       {% endblock content %}
     </main>

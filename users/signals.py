@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
@@ -17,10 +17,10 @@ def CreateProfile(sender, instance, created, **kwargs):
     if created == True:
         user = instance
         profile = Profile.objects.create(
-            user = user,
-            username = user.username,
-            name = user,
-            email = user.email,
+            user=user,
+            username=user.username,
+            email=user.email,
+            name=user.first_name,
             is_coach = False,
         )
 
@@ -38,8 +38,8 @@ def UpdateUser(sender, instance, created, **kwargs):
         user.email = profile.email
         user.save()
 
-@receiver(post_delete, sender=Profile)
-def ProfileDeleted(sender, instance, **kwargs):
-    user = instance.user
+@receiver(post_delete,sender=Profile)
+def DeleteUser(sender, instance, **kwargs):
+    profile = instance
+    user = profile
     user.delete()
-    print(f"Profile {instance} deleted")

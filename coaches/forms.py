@@ -5,7 +5,7 @@ from django.forms import ModelForm
 class CoachForm(ModelForm):
     class Meta:
         model = Coach
-        fields = ['name',
+        fields = ['display_name',
                   'headline',
                   'profile_img',
                   'rank',

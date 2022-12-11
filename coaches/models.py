@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from users.models import Profile
+from users.models import Profile, User
 
 class Rank(models.Model):
     RANKS = (
@@ -37,9 +37,9 @@ class Rank(models.Model):
 
 class Coach(models.Model):
     user_type = models.ForeignKey(
-        Profile, null=True, blank=True, on_delete=models.SET_NULL
+        Profile, null=True, blank=True, on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=250)
+    display_name = models.CharField(max_length=250)
     headline = models.CharField(max_length=60, null=True, blank=True)
     rank = models.ManyToManyField("Rank", blank=True)
     body = models.TextField(max_length=5000, null=True, blank=True)
@@ -49,10 +49,11 @@ class Coach(models.Model):
     id = models.UUIDField(
         default=uuid.uuid4, unique=True, primary_key=True, editable=False
     )
+    discord_link = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_img = models.ImageField(null=True, default="BG_logo.JPG")
 
     def __str__(self) -> str:
-        return self.name
+        return self.display_name
 
 
 class Review(models.Model):

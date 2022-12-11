@@ -16,8 +16,8 @@ def coaches(request):
 
 def coach(request,pk):
     for coach in coaches_list:
-        if pk == coach.name:
-            coachObj = Coach.objects.get(name=pk)
+        if pk == coach.display_name:
+            coachObj = Coach.objects.get(display_name=pk)
             context = {'coach':coachObj}
             return render(request,'coach.html',context)
     return HttpResponse(f"Could not find {pk} coach page")

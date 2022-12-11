@@ -25,3 +25,10 @@
     flex-basis: 100% !important;
   }
 }
+
+.update_account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
