@@ -94,6 +94,6 @@ def editCoachAccount(request):
             #create coach
             context = {"form" : form}
             messages.success(request,"Updated your coach page.")
-            return redirect('coaches')
+            return render(request, 'coach_dashboard.html', context)
     else:
         return redirect('coaches')

@@ -1,0 +1,28 @@
+{% extends main.html %}
+{% block content %}
+<div class="update_account">
+  <form action="{% url 'coach-dashboard' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {% for field in form %}
+    <div class="form__field">
+      <label for="formInput#text">{{field.label}}</label>
+      {{field}} 
+      {% if field.help_text %}
+      <small>{{field.help_text}}</small>
+      {% endif %} 
+      {% for error in field.errors %}
+      <p style="color: red">{{error}}</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="auth__actions">
+      <input
+        class="btn btn--sub btn--lg"
+        type="submit"
+        value="Update Coach"
+      />
+    </div>
+  </form>
+</div>
+{% endblock content %}

@@ -44,7 +44,7 @@
         <div class="container">
           <div class="grid grid--three">
             <!-- Card Sections -->
-            {% for coach in coaches.all %} {% if coach.user_type.is_coach %}
+            {% for coach in coaches %} {% if coach.user_type.is_coach %}
             <div class="column">
               <div class="card coach">
                 <a href="{% url 'coach' coach.display_name %}" class="coach">

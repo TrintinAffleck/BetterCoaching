@@ -49,7 +49,7 @@ class Coach(models.Model):
     id = models.UUIDField(
         default=uuid.uuid4, unique=True, primary_key=True, editable=False
     )
-    discord_link = models.OneToOneField(User, on_delete=models.CASCADE)
+    discord_link = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     profile_img = models.ImageField(null=True, default="BG_logo.JPG")
 
     def __str__(self) -> str:

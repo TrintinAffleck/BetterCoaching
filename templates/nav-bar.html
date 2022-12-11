@@ -31,7 +31,7 @@
           <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
           <li class="header__menuItem"><a href="{% url 'account' %}">Logged in as {{user}}</a></li>
           {% if user.profile.is_coach %}
-          <li class="header__menuItem"><a href="{% url 'account' %}">Coach Dashboard</a></li>
+          <li class="header__menuItem"><a href="{% url 'coach-dashboard' %}">Coach Dashboard</a></li>
           {% endif %}
           {% if user.profile.profile_img %}
           <li class="header__menuItem"><a class="avatar avatar--x1">{{user.profile.profile_img}}</a></li>
