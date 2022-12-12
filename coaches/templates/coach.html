@@ -39,11 +39,7 @@
                                 </li>
                             </ul> -->
                         {% if user.is_authenticated %}
-                        {% if user.profile.is_coach and user.username.lower == coach.display_name.lower %}
-                        <h3><a href="{% url 'update-coach' coach.display_name %}">Edit coach</a></h3>
-                        {% else %}
                         <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em;">Send Message</a>
-                        {% endif %}
                         {% endif %}
 
                     </div>
