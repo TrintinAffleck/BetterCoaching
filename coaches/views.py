@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .forms import CoachForm
+from .forms import CoachForm, AccomplishmentForm
 from .models import Coach
+from django.contrib.messages import success,warning,info
 
 
 #List of all coaches
@@ -20,9 +21,9 @@ def coach(request,pk):
             coachObj = Coach.objects.get(display_name=pk)
             context = {'coach':coachObj}
             return render(request,'coach.html',context)
-    return HttpResponse(f"Could not find {pk} coach page")
+    return HttpResponse(f'Could not find {pk} coach page')
 
-@login_required(login_url="login")
+@login_required(login_url='login')
 def addCoach(request):
     form = CoachForm()
 
@@ -36,21 +37,27 @@ def addCoach(request):
     context = {'form' : form}
     return render(request, 'coach_form.html', context)
 
-@login_required(login_url="login")
-def updateCoach(request, pk):
-    coach = Coach.objects.get(name=pk)
-    form = CoachForm(instance=coach)
-    if request.method == 'POST':
-        form = CoachForm(request.POST, request.FILES, instance=coach)
-        if form.is_valid():
-            print("Form is valid")
-            form.save()
-            return redirect('coaches')
+# @login_required(login_url='login')
+# def updateCoach(request, pk):
+#     coach = Coach.objects.get(name=pk)
+#     form = CoachForm(instance=coach)
+#     profile = request.user
+#     if request.method == 'POST':
+#         form = CoachForm(request.POST, request.FILES, instance=coach)
+#         if form.is_valid():
+#             coach_obj = form.save(commit=False)
+#             if coach:
+#                 print(f'Coach : {coach}')
+#                 print(f'Profile : {profile}')
+#                 if coach.user_type == profile:
+#                     coach_obj.user_type = profile
+#             form.save()
+#             return redirect('coaches')
 
-    context = {'form' : form, 'coach' : coach}
-    return render(request, 'coach_form.html', context)
+#     context = {'form' : form, 'coach' : coach}
+#     return render(request, 'coach_form.html', context)
 
-@login_required(login_url="login")
+@login_required(login_url='login')
 def deleteCoach(request, pk):
     coach = Coach.objects.get(name=pk)
 
@@ -59,3 +66,20 @@ def deleteCoach(request, pk):
         return redirect('coaches')
     context = {'coach' : coach}
     return render(request,'delete_template.html', context)
+
+
+def addAccomplishment(request,pk):
+    profile = request.user.profile
+    form = AccomplishmentForm()
+    if request.method == 'POST':
+        form = AccomplishmentForm(request.user)
+        if profile.is_coach:
+            if form.is_valid():
+                skill = form.save(commit=False)
+                skill.owner = profile
+                skill.save()
+                success(request, "Accomplishment Added")
+                return redirect('add-accomplishment')
+
+    context = {'profile' : profile, 'form' : form}
+    return render(request, 'accomplishment_form.html', context)

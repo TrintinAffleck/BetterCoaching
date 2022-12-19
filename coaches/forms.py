@@ -1,4 +1,4 @@
-from .models import Coach, Rank
+from .models import Coach, Accomplishments
 from django.forms import ModelForm
 
 
@@ -8,8 +8,8 @@ class CoachForm(ModelForm):
         fields = ['display_name',
                   'headline',
                   'profile_img',
-                  'rank',
-                  'body']
+                  'body',
+                  'discord_link']
 
 
     def __init__(self, *args, **kwargs):
@@ -25,4 +25,14 @@ class CoachForm(ModelForm):
             else:
                 field.widget.attrs.update({'class':'input'})
             
-            
+class AccomplishmentForm(ModelForm):
+    class Meta:
+        model = Accomplishments
+        fields = '__all__'
+        exclude = ['owner']
+
+        def __init__(self, *args, **kwargs):
+            super(AccomplishmentForm, self).__init__(*args, **kwargs)
+
+            for name, field in self.fields.items():
+                field.widget.attrs.update({'class':'input', 'placeholder':'Enter Accomplishment'})

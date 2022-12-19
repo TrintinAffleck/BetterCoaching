@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm, Select
 from .models import Profile
-from coaches.models import Coach, Rank
+from coaches.models import Coach
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -21,14 +21,14 @@ class CustomUserCreationForm(UserCreationForm):
 class UpdateAccountForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'username','email','discord_link']
+        fields = ['name', 'username','email','discord_link','rank','division']
         labels = {'discord_link': 'Discord'}
 
 
 class UpdateCoachForm(UpdateAccountForm):
     class Meta:
         model = Coach
-        fields = ['display_name', 'headline', 'body', 'rank',
+        fields = ['display_name', 'headline', 'body',
                   'discord_link', 'profile_img']
                   
         labels = {'discord_link': 'Discord',
@@ -36,9 +36,8 @@ class UpdateCoachForm(UpdateAccountForm):
                   'display_name': 'Display Name',
                   'headline' : 'Headline',
                   'body' : 'Description/Bio',
-                  'rank' : 'Current Rank'
                   }
-        widgets = {'rank' : Select(choices=Rank.RANKS) }
+        widgets = {'rank' : Select() }
 
     def __init__(self, *args, **kwargs):
         super(UpdateCoachForm, self).__init__(*args, **kwargs)

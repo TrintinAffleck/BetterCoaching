@@ -19,9 +19,7 @@
                             src="{{coach.profile_img.url}}">
                         <h2 class="coach__name">{{coach.display_name}}</h2>
                         <!-- Rank -->
-                        {% for rank in coach.rank.all %}
-                        <p class="coach__title" style="font-weight: bold; font-size: x-large;">{{rank}}</p>
-                        {% endfor %}
+                        <p class="coach__title" style="font-weight: bold; font-size: x-large;">{{coach.user_type.rank}} {{coach.user_type.division}}</p>
                         <p class="coach__title">{{coach.rating}}</p>
                         <span style="font-weight: bold;">{{coach.rating_total}}</span>
                         Review{{coach.rating_total|pluralize:"s"}}

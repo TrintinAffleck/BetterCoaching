@@ -7,7 +7,9 @@
     <title>Better Coaching - Coaches</title>
   </head>
   <body>
-    {% extends 'main.html' %} {% load static %} {% block content %}
+    {% extends 'main.html' %} 
+    {% load static %} 
+    {% block content %}
     <!-- Main Section -->
     <main class="coaches">
       <section class="hero-section text-center">
@@ -44,7 +46,9 @@
         <div class="container">
           <div class="grid grid--three">
             <!-- Card Sections -->
-            {% for coach in coaches %} {% if coach.user_type.is_coach %}
+            {% for coach in coaches %}
+            {% if coach.user_type.is_coach %}
+            {% if coach.user_type.rank and coach.user_type.division %}
             <div class="column">
               <div class="card coach">
                 <a href="{% url 'coach' coach.display_name %}" class="coach">
@@ -65,17 +69,17 @@
                       Review{{coach.rating_total|pluralize:"s"}}
                     </div>
                     <div class="coach__tags">
-                      {% for rank in coach.rank.all %}
                       <span class="tag tag--pill tag--main">
-                        Rank: {{rank}}
+                        Rank: {{coach.user_type.rank}} {{coach.user_type.division}}
                       </span>
-                      {% endfor %}
                     </div>
                   </div>
                 </a>
               </div>
             </div>
-            {% endif %} {% endfor %}
+            {% endif %}
+            {% endif %} 
+            {% endfor %}
           </div>
         </div>
       </section>

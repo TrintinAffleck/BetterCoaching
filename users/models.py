@@ -1,12 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from .ranks import RANKS, DIVISIONS
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE, unique=True)
     username = models.CharField(max_length = 100, blank = True, null = True)
     name = models.CharField(max_length = 100, blank = True, null = True)
     email = models.CharField(max_length = 100, blank = True, null = True)
+    rank = models.CharField(max_length = 50, choices = RANKS, default = 'UNRANKED')
+    division = models.CharField(max_length = 50,choices = DIVISIONS, default = '')
     is_coach = models.BooleanField()
     profile_img = models.ImageField(null = True, blank = True, upload_to = 'profiles/', default = 'profiles/user-default.png')
     discord_link = models.CharField(max_length = 50, null = True, blank = True)

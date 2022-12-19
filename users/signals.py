@@ -11,7 +11,8 @@ def UserUpdated(sender, instance, created, **kwargs):
         return
     print("User Added")
     print(f"Username: {instance}")
-
+    
+'''Creates a profile for the user'''
 @receiver(post_save, sender=User)
 def CreateProfile(sender, instance, created, **kwargs):
     if created == True:
@@ -20,6 +21,8 @@ def CreateProfile(sender, instance, created, **kwargs):
             user=user,
             username=user.username,
             email=user.email,
+            rank=user.rank,
+            division= user.division,
             name=user.first_name,
             is_coach = False,
         )
@@ -36,6 +39,8 @@ def UpdateUser(sender, instance, created, **kwargs):
         else:
             user.username = profile.user
         user.email = profile.email
+        user.rank = profile.rank
+        user.division = profile.division
         user.save()
 
 @receiver(post_delete,sender=Profile)
