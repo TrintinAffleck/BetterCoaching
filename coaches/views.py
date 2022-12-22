@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.messages import success,warning,info
 from .forms import CoachForm, AccomplishmentForm
 from .models import Coach
-from django.contrib.messages import success,warning,info
-
+from coaches.utils import search_coaches
 
 #List of all coaches
 coaches_list = Coach.objects.all()
 
 def coaches(request):
-    coach_obj = Coach.objects.all()
-    context = {'coaches' : coach_obj}
+    coach_obj, search_query = search_coaches()
+    context = {'coaches' : coach_obj, 'search_query': search_query}
     return render(request,'coaches_list.html', context)
 
 def coach(request,pk):
@@ -37,25 +36,25 @@ def addCoach(request):
     context = {'form' : form}
     return render(request, 'coach_form.html', context)
 
-# @login_required(login_url='login')
-# def updateCoach(request, pk):
-#     coach = Coach.objects.get(name=pk)
-#     form = CoachForm(instance=coach)
-#     profile = request.user
-#     if request.method == 'POST':
-#         form = CoachForm(request.POST, request.FILES, instance=coach)
-#         if form.is_valid():
-#             coach_obj = form.save(commit=False)
-#             if coach:
-#                 print(f'Coach : {coach}')
-#                 print(f'Profile : {profile}')
-#                 if coach.user_type == profile:
-#                     coach_obj.user_type = profile
-#             form.save()
-#             return redirect('coaches')
+@login_required(login_url='login')
+def updateCoach(request, pk):
+    coach = Coach.objects.get(name=pk)
+    form = CoachForm(instance=coach)
+    profile = request.user
+    if request.method == 'POST':
+        form = CoachForm(request.POST, request.FILES, instance=coach)
+        if form.is_valid():
+            coach_obj = form.save(commit=False)
+            if coach:
+                print(f'Coach : {coach}')
+                print(f'Profile : {profile}')
+                if coach.user_type == profile:
+                    coach_obj.user_type = profile
+            form.save()
+            return redirect('coaches')
 
-#     context = {'form' : form, 'coach' : coach}
-#     return render(request, 'coach_form.html', context)
+    context = {'form' : form, 'coach' : coach}
+    return render(request, 'coach_form.html', context)
 
 @login_required(login_url='login')
 def deleteCoach(request, pk):
