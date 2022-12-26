@@ -2,15 +2,7 @@ from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
-
-@receiver(post_save, sender=User)
-def UserUpdated(sender, instance, created, **kwargs):
-    if created == False:
-        print("User Updated")
-        print(f"Username: {instance}")
-        return
-    print("User Added")
-    print(f"Username: {instance}")
+from .ranks import RANKS, DIVISIONS
     
 '''Creates a profile for the user'''
 @receiver(post_save, sender=User)
@@ -21,8 +13,8 @@ def CreateProfile(sender, instance, created, **kwargs):
             user=user,
             username=user.username,
             email=user.email,
-            rank=user.rank,
-            division= user.division,
+            rank=[i[1] for i in RANKS if i[1] == 'UNRANKED'][0], #Need to use list comprehension because RANKS & DIVISIONS are tuple of tuples
+            division= [i[1] for i in DIVISIONS if i[1] == ''][0],
             name=user.first_name,
             is_coach = False,
         )
@@ -34,10 +26,7 @@ def UpdateUser(sender, instance, created, **kwargs):
     user = profile.user
     if created == False:
         user.first_name = profile.name
-        if profile.username != None:
-            user.username = profile.username
-        else:
-            user.username = profile.user
+        user.username = profile.username
         user.email = profile.email
         user.rank = profile.rank
         user.division = profile.division
@@ -45,6 +34,7 @@ def UpdateUser(sender, instance, created, **kwargs):
 
 @receiver(post_delete,sender=Profile)
 def DeleteUser(sender, instance, **kwargs):
-    profile = instance
+    profile = instance.user
+    print(f'Profile: {profile}')
     user = profile
     user.delete()
