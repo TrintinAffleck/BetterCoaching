@@ -4,14 +4,15 @@ import uuid
 from .ranks import RANKS, DIVISIONS
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, null = True, on_delete = models.CASCADE, unique=True)
+    user = models.OneToOneField(User, on_delete = models.CASCADE, null= True, blank = True)
     username = models.CharField(max_length = 100, blank = True, null = True)
     name = models.CharField(max_length = 100, blank = True, null = True)
     email = models.CharField(max_length = 100, blank = True, null = True)
     rank = models.CharField(max_length = 50, choices = RANKS, default = 'UNRANKED')
     division = models.CharField(max_length = 50,choices = DIVISIONS, default = '')
     is_coach = models.BooleanField()
-    profile_img = models.ImageField(null = True, blank = True, upload_to = 'profiles/', default = 'profiles/user-default.png')
+    profile_img = models.ImageField(null = True, blank = True, upload_to = 'profiles/',
+                                    default = 'profiles/user-default.png')
     discord_link = models.CharField(max_length = 50, null = True, blank = True)
     created_date = models.DateTimeField(auto_now_add = True)
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
@@ -19,3 +20,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.username)
+
+    class Meta():
+        ordering = ['created_date']

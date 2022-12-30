@@ -4,14 +4,17 @@ from django.http import HttpResponse
 from django.contrib.messages import success,warning,info
 from .forms import CoachForm, AccomplishmentForm
 from .models import Coach
-from coaches.utils import search_coaches
+from coaches.utils import search_coaches, paginate_coaches
 
 #List of all coaches
 coaches_list = Coach.objects.all()
 
 def coaches(request):
-    coach_obj, search_query = search_coaches()
-    context = {'coaches' : coach_obj, 'search_query': search_query}
+    coach_obj, search_query = search_coaches(request)
+    custom_range,coaches = paginate_coaches(request, coach_obj, 1)
+
+    context = {'coaches' : coaches, 'search_query': search_query,
+               'custom_range' : custom_range}
     return render(request,'coaches_list.html', context)
 
 def coach(request,pk):

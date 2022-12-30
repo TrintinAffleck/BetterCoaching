@@ -16,7 +16,6 @@ def loginUser(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        print(request.POST)
 
         try:
             user = User.objects.get(username=username)
@@ -81,10 +80,9 @@ def editCoachAccount(request):
     profile = request.user.profile    
     if profile.is_coach:
         form = UpdateCoachForm(instance=profile)
-        print(f'Profile : {profile.rank}')
         if request.method == 'POST':
             form = UpdateCoachForm(request.POST, request.FILES, instance=profile, empty_permitted=False)
-            if form.is_valid():
+            if form.is_valid() and profile.is_coach:
                 form.save()
                 coach = Coach.objects.update(
                     user_type = profile.user,
