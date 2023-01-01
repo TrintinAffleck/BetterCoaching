@@ -60,7 +60,7 @@
                   />
                   <div class="card__body">
                     <h3 class="coach__rating" style="margin-bottom: 8px;">{{coach.display_name}}</h3>
-                    <p>{{coach.headline}}</p>
+                    <p>{{coach.headline|slice:"60"}}</p>
                     <div class="coach--rating">
                       <span style="font-weight: bold">{{coach.rating_ratio}}%</span>
                       Positive Reviews

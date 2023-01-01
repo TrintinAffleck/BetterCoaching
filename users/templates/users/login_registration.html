@@ -9,7 +9,8 @@
         <p>Create an account.</p>
       </div>
       <form action="{% url 'register' %}" method="POST" class="form auth__form">
-        <!-- Input:Name -->
+
+        <!-- Fields -->
         {% csrf_token %} 
         {% for field in forms %}
         <div class="form__field">
@@ -23,7 +24,6 @@
           {% endfor %}
         </div>
         {% endfor %}
-
 
         <div class="auth__actions">
           <input class="btn btn--sub btn--lg" type="submit" value="Sign Up" />

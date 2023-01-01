@@ -1,69 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends 'main.html' %}
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% extends 'main.html' %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{coach.display_name}} - Coach Page</title>
-</head>
-<body>
-  {% block content %}
-  <main class="profile my-md">
-    <div class="container">
+  </head>
+  <body>
+    {% block content %}
+    <main class="profile my-md">
+      <div class="container">
         <div class="layout">
-            <div class="column column--1of3">
-                <div class="card text-center">
-                    <div class="card__body coach">
-                        <img class="avatar avatar--xl"
-                            src="{{coach.profile_img.url}}">
-                        <h2 class="coach__name">{{coach.display_name}}</h2>
-                        <!-- Rank -->
-                        <p class="coach__title" style="font-weight: bold; font-size: x-large;">{{coach.user_type.rank}} {{coach.user_type.division}}</p>
-                        <p class="coach__title">{{coach.rating}}</p>
-                        <span style="font-weight: bold;">{{coach.rating_total}}</span>
-                        Review{{coach.rating_total|pluralize:"s"}}
-                        <br>
-                        <span style="font-weight: bold;">{{coach.rating_ratio}}%</span>
-                        Positive
-                        <br>
-                        <!-- Only show socials if student purchases a session -->
-                        <!-- Socials -->
-                        <!-- <ul class="coach__social">
+          <div class="column column--1of3">
+            <div class="card text-center">
+              <div class="card__body coach">
+                <img
+                  class="avatar avatar--xl"
+                  src="{{coach.profile_img.url}}"
+                />
+                <h2 class="coach__name">{{coach.display_name}}</h2>
+                <!-- Rank -->
+                <p
+                  class="coach__title"
+                  style="font-weight: bold; font-size: x-large"
+                >
+                  {{coach.user_type.rank}} {{coach.user_type.division}}
+                </p>
+                <p class="coach__title">{{coach.rating}}</p>
+                <span style="font-weight: bold">{{coach.rating_total}}</span>
+                Review{{coach.rating_total|pluralize:"s"}}
+                <br />
+                <span style="font-weight: bold">{{coach.rating_ratio}}%</span>
+                Positive
+                <br />
+                <!-- Only show socials if student purchases a session -->
+                <!-- Socials -->
+                <!-- <ul class="coach__social">
                             <li>
                                 <a title="Discord" href="#" target="_blank"><i
                                     class="im im-discord"></i></a>
                                     {{coach.discord_link}}
                                 </li>
                             </ul> -->
-                        {% if user.is_authenticated %}
-                        <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em;">Send Message</a>
-                        {% endif %}
-
+                {% if user.is_authenticated %}
+                <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em"
+                  >Send Message</a
+                >
+                {% endif %}
                     </div>
                 </div>
             </div>
 
-            <div class="column column--2of3">
-                <div class="coachInfo">
-                    <h3 class="coachInfo__title">About Me</h3>
-                    <p class="coachInfo__about">
-                        {{coach.body}}
-                    </p>
-                </div>
-                <div class="coachInfo">
-                    <h3 class="coachInfo__subtitle">Accomplishments</h3>
-                    <div class="coachInfo__otherSkills">
-                        {% for acp in coach.accomplishments_set.all %}
-                        <span class="tag tag--pill tag--sub tag--lg">
-                            <small>{{acp|slice:"15"}}</small>
-                        {% endfor %}
-                    </div>
-                </div>
+          <div class="column column--2of3">
+            <div class="coachInfo">
+              <h3 class="coachInfo__title">About Me</h3>
+              <p class="coachInfo__about">{{coach.body}}</p>
             </div>
+            <div class="coachInfo">
+              <h3 class="coachInfo__subtitle">Accomplishments</h3>
+              <div class="coachInfo__otherSkills">
+                {% for acp in coach.accomplishments_set.all %}
+                <span class="tag tag--pill tag--sub tag--lg">
+                  <small>{{acp|slice:"15"}}</small>
+                  {% endfor %}
 
+                  <div class="comments">
+                    <div class="commentList">
+                      {% for review in coach.review_set.all %}
+                      <div class="comment">
+                        <a href="{% url 'coach' review.owner.id  %}">
+                          {{review.rating_value}}
+                        </a>
+
+                        <div class="comment__details">
+                          <a
+                            href="{% url 'coach' review.owner.id  %}"
+                            class="comment__author"
+                            >{{review.owner.username}}</a
+                          >
+                          <p class="comment__info">
+                            {{review.body|linebreaksbr}}
+                          </p>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endblock content %}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </main>
-  {% endblock content %}
-</body>
+  </body>
 </html>

@@ -14,7 +14,7 @@ class Coach(models.Model):
     rating_ratio = models.IntegerField(default=0, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(
-        default=uuid.uuid4, unique=True, primary_key=True, editable=False
+        default=uuid.uuid4, unique=False, primary_key=True, editable=False
     )
     discord_link = models.CharField(max_length=60, null=True)
     profile_img = models.ImageField(null=True, default="BG_logo.JPG")
@@ -24,12 +24,13 @@ class Coach(models.Model):
 
 
 class Review(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null= True)
     coach = models.ForeignKey(
         Coach, on_delete=models.CASCADE
     )  # Many to One Relationship
     VOTE_TYPES = (
-        ("up", "Up Vote"),
-        ("down", "Down Vote"),
+        ("Up", "Up Vote"),
+        ("Down", "Down Vote"),
     )
     body = models.TextField(null=True, blank=True)
     rating_value = models.CharField(max_length=200, choices=VOTE_TYPES)
