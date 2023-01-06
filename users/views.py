@@ -71,8 +71,8 @@ def editUserAccount(request):
         form = UpdateAccountForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Account Information Updated.')
     context = {'form': form}
-    messages.success(request, 'Account Information Updated.')
     return render(request, 'users/account.html', context)
 
 @login_required(login_url='coaches')
@@ -83,18 +83,20 @@ def editCoachAccount(request):
         if request.method == 'POST':
             form = UpdateCoachForm(request.POST, request.FILES, instance=profile, empty_permitted=False)
             if form.is_valid() and profile.is_coach:
-                form.save()
-                coach = Coach.objects.update(
-                    user_type = profile.user,
-                    display_name = profile.name,
-                    body = 'Enter your coach description.',
-                    discord_link = profile.discord_link,
-                    profile_img = profile.profile_img,
+                form.save(commit=False)
+                coach = Coach.objects.get(user_type=profile).update(
+                user_type = profile.user,
+                display_name = profile.user,
+                body = 'Enter your Coach Description/Bio',
+                discord_link = profile.discord_link,
+                profile_img = profile.profile_img,
                 )
+                form.save()
+                messages.success(request,'Updated your coach page.')
+
             else:
                 messages.warning(request,'Failed to update coach information. Check all fields.')
         context = {'form' : form}
-        messages.success(request,'Updated your coach page.')
         return render(request, 'users/coach_dashboard.html', context)
     else:
         return redirect('coaches')
