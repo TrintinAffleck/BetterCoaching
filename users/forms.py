@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm, Select
+from django.forms import ModelForm
 from .models import Profile
-from coaches.models import Coach
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
