@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
 <div class="update_account">
-  <form action="{% url 'coach-dashboard' %}" method="POST" enctype="multipart/form-data">
+  <form action="{% url 'update-coach' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %} 
     {% for field in form %}
     <div class="form__field">
