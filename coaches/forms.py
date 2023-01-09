@@ -1,5 +1,7 @@
 from .models import Coach, Accomplishments
 from django.forms import ModelForm
+from users.forms import UpdateAccountForm
+from django.forms import Select
 
 
 class CoachForm(ModelForm):
@@ -36,3 +38,25 @@ class AccomplishmentForm(ModelForm):
 
             for name, field in self.fields.items():
                 field.widget.attrs.update({'class':'input', 'placeholder':'Enter Accomplishment'})
+
+
+
+class UpdateCoachForm(UpdateAccountForm):
+    class Meta:
+        model = Coach
+        fields = ['display_name', 'headline', 'body',
+                  'discord_link', 'profile_img']
+                  
+        labels = {'discord_link': 'Discord',
+                  'profile_img' : 'Profile Image',
+                  'display_name': 'Display Name',
+                  'headline' : 'Headline',
+                  'body' : 'Description/Bio',
+                  }
+        widgets = {'rank' : Select() }
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateCoachForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})

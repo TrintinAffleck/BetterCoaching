@@ -3,8 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from coaches.models import Coach
-from .forms import CustomUserCreationForm, UpdateAccountForm, UpdateCoachForm
+from .forms import CustomUserCreationForm, UpdateAccountForm
 
 def loginUser(request):
     page = 'login'
@@ -74,29 +73,3 @@ def editUserAccount(request):
             messages.success(request, 'Account Information Updated.')
     context = {'form': form}
     return render(request, 'users/account.html', context)
-
-@login_required(login_url='coaches')
-def editCoachAccount(request):
-    profile = request.user.profile    
-    if profile.is_coach:
-        form = UpdateCoachForm(instance=profile)
-        if request.method == 'POST':
-            form = UpdateCoachForm(request.POST, request.FILES, instance=profile, empty_permitted=False)
-            if form.is_valid() and profile.is_coach:
-                form.save(commit=False)
-                coach = Coach.objects.get(user_type=profile).update(
-                user_type = profile.user,
-                display_name = profile.user,
-                body = 'Enter your Coach Description/Bio',
-                discord_link = profile.discord_link,
-                profile_img = profile.profile_img,
-                )
-                form.save()
-                messages.success(request,'Updated your coach page.')
-
-            else:
-                messages.warning(request,'Failed to update coach information. Check all fields.')
-        context = {'form' : form}
-        return render(request, 'users/coach_dashboard.html', context)
-    else:
-        return redirect('coaches')
