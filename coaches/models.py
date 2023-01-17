@@ -2,14 +2,13 @@ from django.db import models
 import uuid
 from users.models import Profile, User
 
-
 class Coach(models.Model):
     user_type = models.ForeignKey(
         Profile, null=True, blank=True, on_delete=models.CASCADE
     )
     display_name = models.CharField(max_length=250)
     headline = models.CharField(max_length=60, null=True, blank=True)
-    body = models.TextField(max_length=5000, null=True, blank=True)
+    body = models.TextField(max_length=10000, null=True, blank=True)
     rating_total = models.IntegerField(default=0, null=True, blank=True)
     rating_ratio = models.IntegerField(default=0, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -21,7 +20,6 @@ class Coach(models.Model):
 
     def __str__(self) -> str:
         return self.display_name
-
 
 class Review(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null= True)
@@ -41,7 +39,6 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return self.rating_value
-
 
 class Accomplishments(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)

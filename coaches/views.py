@@ -28,7 +28,6 @@ def coach(request,pk):
 @login_required(login_url='login')
 def addCoach(request):
     form = CoachForm()
-
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES)
         if form.is_valid():
@@ -40,19 +39,16 @@ def addCoach(request):
     return render(request, 'coach_form.html', context)
 
 @login_required(login_url='login')
-def updateCoach(request, pk):
-    coach = Coach.objects.get(name=pk)
+def updateCoach(request):
+    profile = request.user.profile
+    print(profile)
+    coach = Coach.objects.get(user_type=profile.user)
     form = CoachForm(instance=coach)
-    profile = request.user
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES, instance=coach)
         if form.is_valid():
             coach_obj = form.save(commit=False)
-            if coach:
-                print(f'Coach : {coach}')
-                print(f'Profile : {profile}')
-                if coach.user_type == profile:
-                    coach_obj.user_type = profile
+            NotImplemented
             form.save()
             return redirect('coaches')
 
@@ -62,7 +58,6 @@ def updateCoach(request, pk):
 @login_required(login_url='login')
 def deleteCoach(request, pk):
     coach = Coach.objects.get(name=pk)
-
     if request.method == 'POST':
         coach.delete()
         return redirect('coaches')
