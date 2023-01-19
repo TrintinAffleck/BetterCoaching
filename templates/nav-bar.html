@@ -33,7 +33,7 @@
           <li class="header__menuItem"><a href="{% url 'update-coach' %}">Coach Dashboard</a></li>
           {% endif %}
           {% if user.profile.profile_img %}
-          <li class="header__menuItem"><a class="avatar avatar--x1">
+          <li class="header__menuItem"><a class="avatar avatar--lg">
           <img src="{{user.profile.profile_img.url}}" alt="avatar thumbnail" />
           </a></li>
           {% endif %}
