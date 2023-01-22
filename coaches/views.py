@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.messages import success,warning,info
-from .forms import CoachForm, AccomplishmentForm
+from .forms import CoachForm, AccomplishmentForm, ReviewForm
 from .models import Coach
 from coaches.utils import search_coaches, paginate_coaches
 
@@ -11,7 +11,7 @@ coaches_list = Coach.objects.all()
 
 def coaches(request):
     coach_obj, search_query = search_coaches(request)
-    custom_range,coaches = paginate_coaches(request, coach_obj, 1)
+    custom_range,coaches = paginate_coaches(request, coach_obj, 3)
 
     context = {'coaches' : coaches, 'search_query': search_query,
                'custom_range' : custom_range}
@@ -21,7 +21,18 @@ def coach(request,pk):
     for coach in coaches_list:
         if pk == coach.display_name:
             coachObj = Coach.objects.get(display_name=pk)
-            context = {'coach':coachObj}
+            form = ReviewForm()
+            print(coachObj)
+            print(request.method)
+            if request.method == 'POST':
+                form = ReviewForm(request.POST)
+                review = form.save(commit=False)
+                review.coach = coachObj
+                review.owner = request.user.profile
+                review.save()
+                coachObj.get_votes
+                success(request,'Submitted review')
+            context = {'coach' : coachObj, 'form' : form}
             return render(request,'coach.html',context)
     return HttpResponse(f'Could not find {pk} coach page')
 

@@ -18,13 +18,12 @@
                 <img
                   class="avatar avatar--xl"
                   src="{{coach.profile_img.url}}"
-                />
+                  />
                 <h2 class="coach__name">{{coach.display_name}}</h2>
                 <!-- Rank -->
                 <p
                   class="coach__title"
-                  style="font-weight: bold; font-size: x-large"
-                >
+                  style="font-weight: bold; font-size: x-large">
                   {{coach.user_type.rank}} {{coach.user_type.division}}
                 </p>
                 <p class="coach__title">{{coach.rating}}</p>
@@ -44,52 +43,69 @@
                                 </li>
                             </ul> -->
                 {% if user.is_authenticated %}
-                <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em"
-                  >Send Message</a
-                >
+                <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em">Send
+                  Message</a>
                 {% endif %}
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
 
           <div class="column column--2of3">
             <div class="coachInfo">
-              <h3 class="coachInfo__title">About Me</h3>
+              <h3 class="coachInfo__subtitle">About Me</h3>
               <p class="coachInfo__about">{{coach.body}}</p>
             </div>
             <div class="coachInfo">
-              <h3 class="coachInfo__subtitle">Accomplishments</h3>
               <div class="coachInfo__otherSkills">
                 {% for acp in coach.accomplishments_set.all %}
-                <span class="tag tag--pill tag--sub tag--lg">
-                  <small>{{acp|slice:"15"}}</small>
-                  {% endfor %}
+                <h3 class="coachInfo__subtitle">Accomplishments</h3>
+                <span class="tag tag--pill tag--sub tag--sm">
+                  <small>{{acp.name|slice:"45"}}</small>
+                </span>
+                {% endfor %}
 
                   <div class="comments">
+                  <h3 class="coachInfo__subtitle">Reviews</h3>
+                  <h6 class="coachInfo__about">
+                      {{coach.rating_ratio}}% Positive Reviews ({{coach.rating_total}}
+                      Total Review{{coach.rating_total|pluralize:"s"}})
+                  </h6>
+
+                  <!-- Review Form -->
+                  <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
+                      {% csrf_token %}
+                      {% for field in form %}
+                      <div class="form__field">
+                          <label for="formInput#textarea">{{field.label}}</label>
+                          {{field}}
+                      </div>
+                      {% endfor %}
+                      <input class="btn btn--sub btn--lg" type="submit" value="Add Review" />
+                  </form>
+
+                    <!-- Reviews -->
                     <div class="commentList">
                       {% for review in coach.review_set.all %}
                       <div class="comment">
-                        <a href="{% url 'coach' review.owner.id  %}">
-                          {{review.rating_value}}
+                        <a>
+                          {{review.rating_value}}/5.0
                         </a>
-
                         <div class="comment__details">
-                          <a
-                            href="{% url 'coach' review.owner.id  %}"
-                            class="comment__author"
-                            >{{review.owner.username}}</a
-                          >
+                          <a class="comment__author">{{review.owner.username}}</a>
+                          {% if review.body %}
                           <p class="comment__info">
-                            {{review.body|linebreaksbr}}
+                            {{review.body}}
                           </p>
+                          {% endif %}
                         </div>
                       </div>
                       {% endfor %}
                     </div>
+
                   </div>
                   {% endblock content %}
-                </span>
               </div>
+
             </div>
           </div>
         </div>

@@ -48,7 +48,6 @@
           <div class="grid grid--three">
             <!-- Card Sections -->
             {% for coach in coaches %}
-            {% if coach.user_type.is_coach %}
             {% if coach.user_type.rank and coach.user_type.division %}
             <div class="column">
               <div class="card coach">
@@ -78,7 +77,6 @@
                 </a>
               </div>
             </div>
-            {% endif %}
             {% endif %} 
             {% endfor %}
           </div>

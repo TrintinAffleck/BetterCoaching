@@ -53,6 +53,11 @@
 
 .tag--lg {
   padding: 0.8rem 3rem;
+  font-size: 2rem;
+}
+
+.tag--sm {
+  padding: 0.8rem 2rem;
   font-size: 1.4rem;
 }
 
