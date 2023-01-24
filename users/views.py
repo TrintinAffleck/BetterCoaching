@@ -25,7 +25,7 @@ def loginUser(request):
 
         if user is not None:
             login(request, user=user)
-            return redirect('coaches')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'coaches')
         else:
             messages.error(request, 'Username or Password is incorrect.')
     return render(request, 'users/login_registration.html', context)

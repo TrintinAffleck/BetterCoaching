@@ -35,7 +35,7 @@ class AccomplishmentForm(ModelForm):
             super(AccomplishmentForm, self).__init__(*args, **kwargs)
 
             for name, field in self.fields.items():
-                field.widget.attrs.update({'class':'input', 'placeholder':'Enter Accomplishment'})
+                field.widget.attrs.update({'class' : 'input', 'placeholder' : 'Enter Accomplishment'})
 
 class UpdateCoachForm(UpdateAccountForm):
     class Meta:
@@ -55,7 +55,7 @@ class UpdateCoachForm(UpdateAccountForm):
         super(UpdateCoachForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class':'input'})
+            field.widget.attrs.update({'class' : 'input'})
 
 class ReviewForm(ModelForm):
     class Meta():
@@ -69,4 +69,6 @@ class ReviewForm(ModelForm):
         super(ReviewForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class':'input'})
+            field.widget.attrs.update({'class' : 'input'})
+            if name == 'body':
+                field.widget.attrs.update({'class' : 'input', 'placeholder' : 'Enter review here.'})
