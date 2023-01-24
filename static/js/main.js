@@ -11,7 +11,6 @@ if (searchForm)
 
       //Getting Data Attribute
       let page = this.dataset.page
-      console.log(page)
 
       //Adding search query to html
       searchForm.innerHTML += `<input value=${page} name="page" hidden />`
