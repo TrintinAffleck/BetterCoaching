@@ -69,11 +69,11 @@
                 {% endfor %}
 
                 <div class="comments">
+                <!-- Review Form -->
                 {% if request.user.profile == coach.user_type %}
                 <p>You cannot give yourself a review. Silly Goose!</p>
                 <br>
                 {% elif request.user.is_authenticated %}
-                <!-- Review Form -->
                 <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
                     {% csrf_token %}
                     <p>Choose your rating out of 5 stars.</p>
@@ -95,24 +95,24 @@
                     Total Review{{coach.rating_total|pluralize:"s"}})
                 </h6>
 
-                  <!-- Reviews -->
-                  <div class="commentList">
-                    {% for review in coach.review_set.all %}
-                    <div class="comment">
-                      <a>
-                        {{review.rating_value}}/5.0
-                      </a>
-                      <div class="comment__details">
-                        <p class="comment__author">{{review.owner.username}}</p>
-                        {% if review.body %}
-                        <p class="comment__info">
-                          {{review.body}}
-                        </p>
-                        {% endif %}
-                      </div>
+                <!-- Reviews -->
+                <div class="commentList">
+                  {% for review in coach.review_set.all %}
+                  <div class="comment">
+                    <a>
+                      {{review.rating_value}}/5.0
+                    </a>
+                    <div class="comment__details">
+                      <p class="comment__author">{{review.owner.username}}</p>
+                      {% if review.body %}
+                      <p class="comment__info">
+                        {{review.body}}
+                      </p>
+                      {% endif %}
                     </div>
-                    {% endfor %}
                   </div>
+                  {% endfor %}
+                </div>
 
                   </div>
                   {% endblock content %}
