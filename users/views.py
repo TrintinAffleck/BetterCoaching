@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import Message
 from .forms import CustomUserCreationForm, UpdateAccountForm
 
 def loginUser(request):
@@ -13,21 +14,23 @@ def loginUser(request):
         return redirect('coaches')
 
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
 
         try:
             user = User.objects.get(username=username)
+            try:
+                user = authenticate(request, username=username, password=password)
+                login(request, user=user)
+                return redirect(request.GET['next'] if 'next' in request.GET else 'coaches')
+            except:
+                messages.error(request, 'Password is incorrect.')
+                return render(request, 'users/login_registration.html', context)   
+
         except:
             messages.error(request, 'Username does not exist')
+            return render(request, 'users/login_registration.html', context)
 
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user=user)
-            return redirect(request.GET['next'] if 'next' in request.GET else 'coaches')
-        else:
-            messages.error(request, 'Username or Password is incorrect.')
     return render(request, 'users/login_registration.html', context)
 
 
@@ -73,3 +76,11 @@ def editUserAccount(request):
             messages.success(request, 'Account Information Updated.')
     context = {'form': form}
     return render(request, 'users/account.html', context)
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    user_messages = profile.messages.all()
+    unread_count = user_messages.filter(is_read=False).count()
+    context = {'unread_count' : unread_count, 'user_messages' : user_messages}
+    return render(request,'users/inbox.html',context)
