@@ -24,7 +24,6 @@ def paginate_coaches(request, coaches, coaches_per_page):
 
     page = request.GET.get('page')
     paginator = Paginator(coaches, coaches_per_page)
-    print(f"page {page}")
     try:
         coaches = paginator.page(page)
     except PageNotAnInteger:
