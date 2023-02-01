@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 from .ranks import RANKS, DIVISIONS
-    
+
 '''Creates a profile for the user'''
 @receiver(post_save, sender=User)
 def CreateProfile(sender, instance, created, **kwargs):
@@ -13,14 +13,15 @@ def CreateProfile(sender, instance, created, **kwargs):
             user=user,
             username=user.username,
             email=user.email,
-            rank=[i[1] for i in RANKS if i[1] == 'UNRANKED'][0], #Need to use list comprehension because RANKS & DIVISIONS are tuple of tuples
-            division= [i[1] for i in DIVISIONS if i[1] == ''][0],
+            # Need to use list comprehension because RANKS & DIVISIONS are tuple of tuples
+            rank=[i[1] for i in RANKS if i[1] == 'UNRANKED'][0],
+            division=[i[1] for i in DIVISIONS if i[1] == ''][0],
             name=user.first_name,
-            is_coach = False,
+            is_coach=False,
         )
 
 '''Updates the user information if the profile is changed.'''
-@receiver(post_save,sender=Profile)
+@receiver(post_save, sender=Profile)
 def UpdateUser(sender, instance, created, **kwargs):
     profile = instance
     user = profile.user
@@ -32,7 +33,7 @@ def UpdateUser(sender, instance, created, **kwargs):
         user.division = profile.division
         user.save()
 
-@receiver(post_delete,sender=Profile)
+@receiver(post_delete, sender=Profile)
 def DeleteUser(sender, instance, **kwargs):
     user = instance.user
     user.delete()

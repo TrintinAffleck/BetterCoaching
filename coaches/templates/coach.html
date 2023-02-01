@@ -44,7 +44,7 @@
                             </ul> -->
                 {% if user.is_authenticated and request.user.profile == coach.user_type %}
                 {% elif user.is_authenticated %}
-                <a href="#" class="btn btn--sub btn--lg" style="margin-top: 2em">Send
+                <a href="{% url 'send-message' coach.id %}" class="btn btn--sub btn--lg" style="margin-top: 2em">Send
                   Message</a>
                   <br>
                 {% else %}
@@ -103,7 +103,7 @@
                       {{review.rating_value}}/5.0
                     </a>
                     <div class="comment__details">
-                      <p class="comment__author">{{review.owner.username}}</p>
+                      <h1 class="comment__author">{{review.owner.username}}</h1>
                       {% if review.body %}
                       <p class="comment__info">
                         {{review.body}}

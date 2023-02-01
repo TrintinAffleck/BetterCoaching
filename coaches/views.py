@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.contrib.messages import success,warning,info
+from django.contrib.messages import success
 from .forms import CoachForm, AccomplishmentForm, ReviewForm
 from .models import Coach
 from coaches.utils import search_coaches, paginate_coaches
 
-#List of all coaches
 coaches_list = Coach.objects.all()
 
 def coaches(request):
@@ -76,7 +75,7 @@ def deleteCoach(request, pk):
     return render(request,'delete_template.html', context)
 
 
-def addAccomplishment(request,pk):
+def addAccomplishment(request):
     profile = request.user.profile
     form = AccomplishmentForm()
     if request.method == 'POST':
