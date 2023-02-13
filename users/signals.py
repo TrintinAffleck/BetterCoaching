@@ -1,6 +1,8 @@
 from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.mail import send_mail
 from .models import Profile
 from .ranks import RANKS, DIVISIONS
 
@@ -18,6 +20,13 @@ def CreateProfile(sender, instance, created, **kwargs):
             division=[i[1] for i in DIVISIONS if i[1] == ''][0],
             name=user.first_name,
             is_coach=False,
+        )
+        send_mail(
+            'Welcome to better coaching!',
+            'Thank you for joining better coaching.',
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False,
         )
 
 '''Updates the user information if the profile is changed.'''

@@ -96,7 +96,6 @@ def viewMessage(request,pk):
     if message.is_read == False:
         message.is_read = True
         message.save()
-    print(f"{message.is_read} triggered")
     context = {'profile':profile,'message':message}
     return render(request, 'users/message.html', context)
 
