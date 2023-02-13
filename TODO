@@ -4,3 +4,6 @@ Remove the circle behind the avatar image
 Find some way to rename user_type to user in coach model
 Fix positive % ratio
 When I use mouse button to go back the message is not read in inbox
+Add the back buttons to all my forms
+Probably could cleanup a lot of views by adding code into utils.py
+Finish up passwords
