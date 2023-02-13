@@ -128,7 +128,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "t.affleck101@hotmail.com"
 EMAIL_HOST_USER ='t.affleck101@hotmail.com'
-EMAIL_HOST_PASSWORD = 'vormqasmcwrjzrsf'
+EMAIL_HOST_PASSWORD = ''
 
 
 # Static files (CSS, JavaScript, Images)
