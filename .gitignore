@@ -1,4 +1,4 @@
-.env
+env
 BetterCoaching.code-workspace
 staticfiles/**
 templates/profile(copy).html
