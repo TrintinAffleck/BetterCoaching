@@ -74,7 +74,7 @@
                 <p>You cannot give yourself a review. Silly Goose!</p>
                 <br>
                 {% elif request.user.is_authenticated %}
-                <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
+                <form class="form" action="{% url 'coach' coach.id %}" method="POST">
                     {% csrf_token %}
                     <p>Choose your rating out of 5 stars.</p>
                     {% for field in form %}

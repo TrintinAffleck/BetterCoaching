@@ -26,8 +26,8 @@
             <li class="message message--read">
           {% endif %}
           <a href="{% url 'message' message.id %}">
-            <span class="message__author">{{message.sender}}</span>
-            <span class="message__subject">{{message.subject}}</span>
+            <span class="message__author"><b>{{message.sender}}</b></span>
+            <span class="message__subject"><b>Subject: </b>{{message.subject}}</span>
             <span class="message__date">{{message.created_date}}</span>
           </a>
         </li>

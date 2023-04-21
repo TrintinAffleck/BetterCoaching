@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from users.models import Profile, User
+from users.models import Profile
 
 class Coach(models.Model):
     user_type = models.ForeignKey(
@@ -28,12 +28,16 @@ class Coach(models.Model):
         upvotes = reviews.filter(rating_value=5).count()
         total = reviews.count()
         print(f"Upvote = {upvotes}")
-        ratio = (upvotes/total) * 100
+        if total > 0:
+            ratio = (upvotes/total) * 100
+        else:
+            ratio = 0
         print(f"Ratio = {ratio}")
         print(f"Total = {total}")
         self.rating_total = total
         self.rating_ratio = ratio
         self.save()
+
 
     class Meta():
         ordering = ['-rating_ratio','-rating_total']
@@ -65,8 +69,6 @@ class Review(models.Model):
     )
 
     class Meta():
-        #Constraint so the coach cannot leave himself a review
-        # models.UniqueConstraint(fields=['owner'], condition=models.Q(owner=Coach.user_type), name='unique_user')
         ordering = ['-created_date']
 
     def __str__(self) -> str:

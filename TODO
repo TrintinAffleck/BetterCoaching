@@ -5,3 +5,5 @@ Add the back buttons to all my forms
 Probably could cleanup a lot of views by adding code into utils.py
 Implement updateCoach view
 Need to fix inbox to be able to send messages and only send them to coaches
+Add unread messages to the nav bar if there is a new message
+Fix the dates in inbox its not the right date its like 7 hours ahead

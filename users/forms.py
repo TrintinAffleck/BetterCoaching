@@ -23,7 +23,7 @@ class UpdateAccountForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['name', 'username', 'email',
-                  'discord_link', 'rank', 'division']
+                  'discord_link', 'rank', 'division', 'profile_img']
         labels = {'discord_link': 'Discord'}
 
 

@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.utils import timezone
 from .ranks import RANKS, DIVISIONS
-
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -35,7 +35,7 @@ class Message(models.Model):
     subject = models.CharField(max_length=200, null=True, blank=True)
     body = models.TextField(max_length=2500)
     is_read = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(default=timezone.now)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 

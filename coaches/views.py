@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.messages import success
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAdminUser
 from .forms import CoachForm, AccomplishmentForm, ReviewForm
 from .models import Coach
 from coaches.utils import search_coaches, paginate_coaches
@@ -18,11 +20,9 @@ def coaches(request):
 
 def coach(request,pk):
     for coach in coaches_list:
-        if pk == coach.display_name:
+        if pk.lower() == coach.display_name.lower():
             coachObj = Coach.objects.get(display_name=pk)
             form = ReviewForm()
-            print(coachObj)
-            print(request.method)
             if request.method == 'POST':
                 form = ReviewForm(request.POST)
                 review = form.save(commit=False)
@@ -33,7 +33,8 @@ def coach(request,pk):
                 success(request,'Submitted review')
             context = {'coach' : coachObj, 'form' : form}
             return render(request,'coach.html',context)
-    return HttpResponse(f'Could not find {pk} coach page')
+
+    return HttpResponse(f'Could not find {pk} coach page.')
 
 @login_required(login_url='login')
 def addCoach(request):
@@ -51,14 +52,11 @@ def addCoach(request):
 @login_required(login_url='login')
 def updateCoach(request):
     profile = request.user.profile
-    print(profile)
-    coach = Coach.objects.get(user_type=profile.user)
+    coach = Coach.objects.get(user_type=profile)
     form = CoachForm(instance=coach)
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES, instance=coach)
         if form.is_valid():
-            coach_obj = form.save(commit=False)
-            NotImplemented
             form.save()
             return redirect('coaches')
 
@@ -66,6 +64,7 @@ def updateCoach(request):
     return render(request, 'coach_form.html', context)
 
 @login_required(login_url='login')
+@permission_classes([IsAdminUser])
 def deleteCoach(request, pk):
     coach = Coach.objects.get(name=pk)
     if request.method == 'POST':
@@ -74,7 +73,7 @@ def deleteCoach(request, pk):
     context = {'coach' : coach}
     return render(request,'delete_template.html', context)
 
-
+@login_required(login_url='login')
 def addAccomplishment(request):
     profile = request.user.profile
     form = AccomplishmentForm()

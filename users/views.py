@@ -3,10 +3,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Message
 from coaches.models import Coach
 from .forms import CustomUserCreationForm, UpdateAccountForm, MessageForm
-
+from django.shortcuts import get_object_or_404
+from django.http.response import Http404
 
 def loginUser(request):
     page = 'login'
@@ -86,31 +86,33 @@ def inbox(request):
     user_messages = profile.messages.all()
     unread_count = user_messages.filter(is_read=False).count()
     context = {'unread_count': unread_count,
-               'user_messages': user_messages}
+               'user_messages': user_messages
+               }
     return render(request, 'users/inbox.html', context)
 
 @login_required(login_url='login')
 def viewMessage(request,pk):
     profile = request.user.profile
     message = profile.messages.get(id=pk)
-    if message.is_read == False:
+    if not message.is_read:
         message.is_read = True
         message.save()
     context = {'profile':profile,'message':message}
     return render(request, 'users/message.html', context)
 
 @login_required(login_url='login')
-def sendMessage(request,pk):
-    coach = Coach.objects.get(id=pk)
-    receiver = coach.user_type
-    form = MessageForm()
-    context = {'form':form}
+def sendMessage(request, pk):
+    receiver = Coach.objects.get(id=pk)
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user.profile
-            message.receiver = receiver
+            message.receiver = receiver.user_type
             message.save()
             messages.success(request, 'Message Sent')
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    context = {'form': form, 'receiver':  receiver}
     return render(request,'message_form.html', context)
