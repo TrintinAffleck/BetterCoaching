@@ -12,7 +12,7 @@ def search_coaches(request):
     accomplishments = Accomplishments.objects.filter(name__icontains=search_query)
     rank = Profile.objects.filter(rank__icontains=search_query)
     coach_obj = Coach.objects.filter(
-    Q(user_type__in=rank) |
+    Q(user__in=rank) |
     Q(display_name__icontains=search_query) |
     Q(headline=search_query) |
     Q(body__icontains=search_query) |

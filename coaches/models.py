@@ -3,7 +3,7 @@ import uuid
 from users.models import Profile
 
 class Coach(models.Model):
-    user_type = models.ForeignKey(
+    user = models.ForeignKey(
         Profile, null = True, blank = True, on_delete = models.CASCADE
     )
     display_name = models.CharField(max_length = 250)
@@ -25,17 +25,17 @@ class Coach(models.Model):
     @property
     def get_votes(self):
         reviews = self.review_set.all()
-        upvotes = reviews.filter(rating_value=5).count()
         total = reviews.count()
-        print(f"Upvote = {upvotes}")
         if total > 0:
-            ratio = (upvotes/total) * 100
+            rating_sum = 0
+            for review in reviews:
+                # rating_sum += float(review.rating_value)
+                print(type(review.rating_value))
+            average_rating = rating_sum / total
         else:
-            ratio = 0
-        print(f"Ratio = {ratio}")
-        print(f"Total = {total}")
+            average_rating = 0
         self.rating_total = total
-        self.rating_ratio = ratio
+        self.rating_ratio = average_rating
         self.save()
 
 
@@ -49,20 +49,20 @@ class Review(models.Model):
     owner = models.ForeignKey(Profile, on_delete = models.DO_NOTHING) #User who gave the review
     coach = models.ForeignKey(Coach, on_delete = models.CASCADE)  #Coach who received the review.
     VOTE_TYPES = (
-        ('5.0', '5'),
-        ('4.5', '4.5'),
-        ('4.0', '4.0'),
-        ('3.5', '3.5'),
-        ('3.0', '3.0'),
-        ('2.5', '2.5'),
-        ('2.0', '2.0'),
-        ('1.5', '1.5'),
-        ('0.0', '1.0'),
-        ('0.5', '0.5'),
-        ('0', '0')
+        ('5.0', 5),
+        ('4.5', 4.5),
+        ('4.0', 4),
+        ('3.5', 3.5),
+        ('3.0', 3),
+        ('2.5', 2.5),
+        ('2.0', 2),
+        ('1.5', 1.5),
+        ('0.0', 1),
+        ('0.5', 0.5),
+        ('0', 0)
     )
     body = models.TextField(null = True, blank = True)
-    rating_value = models.CharField(max_length = 200, choices = VOTE_TYPES)
+    rating_value = models.SmallIntegerField(choices = VOTE_TYPES)
     created_date = models.DateTimeField(auto_now_add = True)
     id = models.UUIDField(
         default = uuid.uuid4, unique = True, primary_key = True, editable = False

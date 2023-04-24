@@ -15,7 +15,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CoachSerializer(serializers.ModelSerializer):
-    user_type = ProfileSerializer(many=False)
+    user = ProfileSerializer(many=False)
     reviews = serializers.SerializerMethodField() 
     class Meta:
         model = Coach

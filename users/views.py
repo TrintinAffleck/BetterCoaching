@@ -108,7 +108,7 @@ def sendMessage(request, pk):
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user.profile
-            message.receiver = receiver.user_type
+            message.receiver = receiver.user
             message.save()
             messages.success(request, 'Message Sent')
             return redirect('inbox')

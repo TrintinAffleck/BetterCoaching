@@ -24,7 +24,7 @@
                 <p
                   class="coach__title"
                   style="font-weight: bold; font-size: x-large">
-                  {{coach.user_type.rank}} {{coach.user_type.division}}
+                  {{coach.user.rank}} {{coach.user.division}}
                 </p>
                 <p class="coach__title">{{coach.rating}}</p>
                 <span style="font-weight: bold">{{coach.rating_total}}</span>
@@ -42,7 +42,7 @@
                                     {{coach.discord_link}}
                                 </li>
                             </ul> -->
-                {% if user.is_authenticated and request.user.profile == coach.user_type %}
+                {% if user.is_authenticated and request.user.profile == coach.user %}
                 {% elif user.is_authenticated %}
                 <a href="{% url 'send-message' coach.id %}" class="btn btn--sub btn--lg" style="margin-top: 2em">Send
                   Message</a>
@@ -70,11 +70,11 @@
 
                 <div class="comments">
                 <!-- Review Form -->
-                {% if request.user.profile == coach.user_type %}
+                {% if request.user.profile == coach.user %}
                 <p>You cannot give yourself a review. Silly Goose!</p>
                 <br>
                 {% elif request.user.is_authenticated %}
-                <form class="form" action="{% url 'coach' coach.id %}" method="POST">
+                <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
                     {% csrf_token %}
                     <p>Choose your rating out of 5 stars.</p>
                     {% for field in form %}
