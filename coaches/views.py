@@ -33,7 +33,6 @@ def coach(request,pk):
                 success(request,'Submitted review')
             context = {'coach' : coachObj, 'form' : form}
             return render(request,'coach.html',context)
-
     return HttpResponse(f'Could not find {pk} coach page.')
 
 @login_required(login_url='login')
@@ -52,7 +51,7 @@ def addCoach(request):
 @login_required(login_url='login')
 def updateCoach(request):
     profile = request.user.profile
-    coach = Coach.objects.get(user_type=profile)
+    coach = Coach.objects.get(user=profile)
     form = CoachForm(instance=coach)
     if request.method == 'POST':
         form = CoachForm(request.POST, request.FILES, instance=coach)
