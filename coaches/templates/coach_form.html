@@ -7,8 +7,6 @@
     <h1>Coach Form</h1>
     <div class="formWrapper">
       {% if user.profile.is_coach %}
-      <a class="backButton" href="{% url 'coaches' %}"><i class="im im-angle-left">	&#8592;</i></a>
-        <br>
         <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Input:Text -->
