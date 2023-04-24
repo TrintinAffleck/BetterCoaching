@@ -1,6 +1,5 @@
 Fix positive % ratio
 When I use mouse button to go back the message is not read in inbox
-Add the back buttons to all my forms
 Probably could cleanup a lot of views by adding code into utils.py
 Implement updateCoach view
 Need to fix inbox to be able to send messages and only send them to coaches
