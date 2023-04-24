@@ -48,17 +48,15 @@
           <div class="grid grid--three">
             <!-- Card Sections -->
             {% for coach in coaches %}
-            {% if coach.user.rank and coach.user.division %}
+            {% if coach.user.rank and coach.user.division and coach.headline and coach.display_name %}
             <div class="column">
               <div class="card coach">
                 <a href="{% url 'coach' coach.display_name %}" class="coach">
-                  {% if coach.profile_img.url %}
                   <img
                     class="coach__thumbnail"
                     src="{{coach.profile_img.url}}"
                     alt="coach thumbnail"
                   />
-                  {% endif %}
                   <div class="card__body">
                     <h3 class="coach__rating" style="margin-bottom: 8px;">{{coach.display_name}}</h3>
                     <p>{{coach.headline|slice:"60"}}</p>
