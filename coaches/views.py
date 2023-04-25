@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.messages import success, error
 from django.http import HttpResponse
-from django.contrib.messages import success
+from django.shortcuts import redirect, render
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAdminUser
-from .forms import CoachForm, AccomplishmentForm, ReviewForm
+
+from coaches.utils import paginate_coaches, search_coaches
+
+from .forms import AccomplishmentForm, AddCoachForm, CoachForm, ReviewForm
 from .models import Coach
-from coaches.utils import search_coaches, paginate_coaches
 
 coaches_list = Coach.objects.all()
 
@@ -37,16 +40,30 @@ def coach(request,pk):
 
 @login_required(login_url='login')
 def addCoach(request):
-    form = CoachForm()
+    form = AddCoachForm()
     if request.method == 'POST':
-        form = CoachForm(request.POST, request.FILES)
+        form = AddCoachForm(request.POST)
         if form.is_valid():
-            form.save()
-            print(f"{type(form['name'])}Coach Added")
+            coach = form.save(commit=False)
+            #  = User.objects.get(user=coach.user)
+            coach, created = Coach.objects.get_or_create(
+                user=coach.user,
+                display_name=coach.display_name,
+                headline=coach.headline,
+                body=coach.body,
+                rating_total=0,
+                rating_ratio=0,
+            )
+            if created:
+                success(
+                    request, f'Coach {coach.display_name} Successfully Added')
+            else:
+                error(request, f'{coach.display_name} Coach Already Exists.')
+                
             return redirect('coaches')
 
-    context = {'form' : form}
-    return render(request, 'coach_form.html', context)
+    context = {'form': form}
+    return render(request, 'add-coach-form.html', context)
 
 @login_required(login_url='login')
 def updateCoach(request):
