@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.messages import success, error
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
+from .models import Profile
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAdminUser
 
@@ -45,7 +46,6 @@ def addCoach(request):
         form = AddCoachForm(request.POST)
         if form.is_valid():
             coach = form.save(commit=False)
-            #  = User.objects.get(user=coach.user)
             coach, created = Coach.objects.get_or_create(
                 user=coach.user,
                 display_name=coach.display_name,
@@ -54,9 +54,16 @@ def addCoach(request):
                 rating_total=0,
                 rating_ratio=0,
             )
+            user = User.objects.get(username=coach.user)
+            if user:
+                user.profile.is_coach = True
+                user.save()
+                profile = Profile.objects.get(user=user)
+                profile.save()
             if created:
                 success(
                     request, f'Coach {coach.display_name} Successfully Added')
+                coach.save()
             else:
                 error(request, f'{coach.display_name} Coach Already Exists.')
                 
@@ -77,7 +84,7 @@ def updateCoach(request):
             return redirect('coaches')
 
     context = {'form' : form, 'coach' : coach}
-    return render(request, 'coach_form.html', context)
+    return render(request, 'coach_dashboard.html', context)
 
 @login_required(login_url='login')
 @permission_classes([IsAdminUser])
