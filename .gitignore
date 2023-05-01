@@ -4,3 +4,4 @@ staticfiles/**
 templates/profile(copy).html
 templates/index.html
 BetterCoaching/settings.py
+.vscode/launch.json
