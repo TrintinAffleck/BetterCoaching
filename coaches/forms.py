@@ -101,4 +101,4 @@ class ReviewForm(ModelForm):
             field.widget.attrs.update({'class': 'input'})
             if name == 'body':
                 field.widget.attrs.update(
-                    {'class': 'input', 'placeholder': 'Enter review here.'})
+                    {'placeholder': 'Enter review here.'})
