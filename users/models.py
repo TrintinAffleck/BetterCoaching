@@ -12,7 +12,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=250, blank=True, null=True)
     rank = models.CharField(max_length=50, choices=RANKS, default='UNRANKED')
     division = models.CharField(max_length=50, choices=DIVISIONS, default='')
-    is_coach = models.BooleanField()
+    is_coach = models.BooleanField(default=False)
     profile_img = models.ImageField(null=True, blank=True, upload_to='profiles/',
                                     default='profiles/user-default.png')
     discord_link = models.CharField(max_length=50, null=True, blank=True)
