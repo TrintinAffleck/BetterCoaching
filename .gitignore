@@ -5,3 +5,6 @@ templates/profile(copy).html
 templates/index.html
 BetterCoaching/settings.py
 .vscode/launch.json
+BetterCoaching/__pycache__
+coaches/__pycache__/
+users/__pycache__/
