@@ -3,6 +3,7 @@
 <div class="update_account">
   <form action="{% url 'update-coach' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %} 
+    <h3>Coach Dashboard</h3>
     {% for field in form %}
     <div class="form__field">
       <label for="formInput#text">{{field.label}}</label>

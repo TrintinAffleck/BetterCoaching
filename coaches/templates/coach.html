@@ -30,8 +30,7 @@
                 <span style="font-weight: bold">{{coach.rating_total}}</span>
                 Review{{coach.rating_total|pluralize:"s"}}
                 <br />
-                <span style="font-weight: bold">{{coach.rating_ratio}}%</span>
-                Positive
+                <span style="font-weight: bold">{{coach.rating_ratio|floatformat:2}} Avg Rating</span>
                 <br />
                 <!-- Only show socials if student purchases a session -->
                 <!-- Socials -->
@@ -75,14 +74,14 @@
                 <br>
                 {% elif request.user.is_authenticated %}
                 <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
-                    {% csrf_token %}
-                    <p>Choose your rating out of 5 stars.</p>
-                    {% for field in form %}
+                  {% csrf_token %}
+                  <p>Choose your rating out of 5 stars.</p>
+                  {% for field in form %}
                     <div class="form__field">
-                        <label for="formInput#textarea">{{field.label}}</label>
-                        {{field}}
+                      <label for="formInput#textarea">{{field.label}}</label>
+                      {{field}}
                     </div>
-                    {% endfor %}
+                  {% endfor %}
                     <input class="btn btn--sub btn--lg" type="submit" value="Add Review" />
                 </form>
                 {% else %}
@@ -91,7 +90,7 @@
                 {% endif %}
                 <h3 class="coachInfo__subtitle">Reviews</h3>
                 <h6 class="coachInfo__about">
-                    {{coach.rating_ratio}}% Positive Reviews ({{coach.rating_total}}
+                    {{coach.rating_ratio|floatformat:2}}Avg Reviews ({{coach.rating_total}}
                     Total Review{{coach.rating_total|pluralize:"s"}})
                 </h6>
 
@@ -108,6 +107,8 @@
                       <p class="comment__info">
                         {{review.body}}
                       </p>
+                      {% else %}
+                      <br>
                       {% endif %}
                     </div>
                   </div>

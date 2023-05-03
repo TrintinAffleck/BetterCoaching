@@ -21,24 +21,24 @@
           <div class="toggle-menu__lines"></div>
         </label>
         <ul class="header__menu">
-          <li class="header__menuItem"><a href="{% url 'coaches' %}">Coaches</a></li>
           {% if user.is_staff %}
           <li class="header__menuItem"><a href="{% url 'add-coach' %}" class="btn btn--sub">Add Coach</a></li>
           {% endif %}
-          {% if request.user.is_authenticated %}
-          <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
-          <li class="header__menuItem"><a href="{% url 'account'%}">My Account</a></li>
-          <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
           {% if user.profile.is_coach %}
-          <li class="header__menuItem"><a href="{% url 'update-coach' %}">Coach Dashboard</a></li>
+          <li class="header__menuItem"><a href="{% url 'update-coach' %}" class="btn btn--sub">Coach Dashboard</a></li>
           {% endif %}
+          <li class="header__menuItem"><a href="{% url 'coaches' %}" class="btn btn--sub">Coaches</a></li>
+          {% if request.user.is_authenticated %}
+          <li class="header__menuItem"><a href="{% url 'inbox' %}" class="btn btn--sub">Inbox</a></li>
+          <li class="header__menuItem"><a href="{% url 'account'%}" class="btn btn--sub">My Account</a></li>
+          <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
           {% if user.profile.profile_img %}
           <li class="header__menuItem"><a class="avatar avatar--md">
           <img src="{{user.profile.profile_img.url}}" alt="avatar thumbnail" />
           </a></li>
           {% endif %}
           {% else %}
-          <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
+          <li class="header__menuItem"><a href="{% url 'login' %}">Login/Sign Up</a></li>
           {% endif %}
 
         </ul>
