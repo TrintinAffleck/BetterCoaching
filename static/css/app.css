@@ -44,18 +44,27 @@ img {
 .header__logo > img {
   height: 10rem;
   width: 12.5rem;
+  padding: 2rem;
 }
 
 .header__nav > ul {
   display: inline-flex;
   align-items: center;
   list-style: none;
-  gap: 6.5rem;
+  gap: 6rem;
 }
 
 .header__menuItem > a {
   color: var(--color-light);
   font-weight: 300;
+  height: fit-content;
+  width: fit-content;
+}
+
+.header__menuItem:not(.btn--sub):hover > a.btn--sub {
+  background: var(--color-sub-light);
+  padding: 1rem 3rem;
+  border-radius: 3px;
 }
 
 .toggle-menu > span {
@@ -79,7 +88,7 @@ img {
 @media screen and (max-width: 800px) {
   .header__logo {
     position: relative;
-    z-index: 999;
+    z-index: 200;
   }
   .toggle-menu {
     position: relative;
@@ -161,6 +170,7 @@ img {
     right: 0;
     background: var(--color-sub);
     transition: all 0.5s ease-in-out;
+    padding : 1rem 3rem
   }
 
   .header__menuItem a {
