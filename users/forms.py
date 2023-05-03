@@ -24,7 +24,15 @@ class UpdateAccountForm(ModelForm):
         model = Profile
         fields = ['name', 'username', 'email',
                   'discord_link', 'rank', 'division', 'profile_img']
-        labels = {'discord_link': 'Discord'}
+        labels = {'discord_link': 'Discord',
+                  'profile_img' : 'Profile Image',
+                  'rank' : 'Rank'}
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateAccountForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
 
 
 class MessageForm(ModelForm):
