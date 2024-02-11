@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
+
 from .models import Profile
+from coaches.models import Coach
 from .ranks import DIVISIONS, RANKS
 
 '''Creates a profile for the user'''
@@ -41,10 +43,31 @@ def UpdateUser(sender, instance, created, **kwargs):
         user.email = profile.email
         user.rank = profile.rank
         user.division = profile.division
+        if profile.is_coach:
+            try:
+                coach_obj, is_coach = Coach.objects.get_or_create(
+                        user = profile,
+                        display_name = profile.username,
+                        headline = "",
+                        body = "",
+                        discord_link = ""
+                )
+                if is_coach:
+                    coach_obj.save()
+            except Exception as e:
+                print(e)
+                print(f"Exception was thrown in the {function.__name__}")
+        else:
+            Coach.objects.filter(user=profile).delete()
         user.save()
         
 '''Handles Deletion of user if the profile is deleted'''
-@receiver(pre_delete, sender=Profile, dispatch_uid="delete_user")
+@receiver(post_delete, sender=Profile, dispatch_uid="delete_user")
 def DeleteUser(instance, **kwargs):
-        user = instance.user
-        user.delete()
+        try:
+            user = instance.user
+            user.profile.delete()
+            user.delete()
+        except RecursionError as e:
+            print("Recursion Error in DeleteUser signal.")
+            print(e.message)
