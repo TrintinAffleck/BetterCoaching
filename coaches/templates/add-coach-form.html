@@ -6,7 +6,7 @@
   <div class="content-box">
     <h1>Coach Form</h1>
     <div class="formWrapper">
-      {% if user.profile.is_coach %}
+      {% if user.is_superuser %}
         <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Input:Text -->
