@@ -17,7 +17,9 @@ coaches_list = Coach.objects.all()
 def coaches(request):
     coach_obj, search_query = search_coaches(request)
     custom_range,coaches = paginate_coaches(request, coach_obj, 3)
-
+    for coach in coach_obj:
+        if coach.rating_total <= 1:
+            coach.rating_ratio = coach.rating_total
     context = {'coaches' : coaches, 'search_query': search_query,
                'custom_range' : custom_range}
     return render(request,'coaches_list.html', context)
@@ -26,18 +28,22 @@ def coach(request,pk):
     for coach in coaches_list:
         if pk.lower() == coach.display_name.lower():
             coachObj = Coach.objects.get(display_name=pk)
-            form = ReviewForm()
             if request.method == 'POST':
                 form = ReviewForm(request.POST)
                 review = form.save(commit=False)
                 review.coach = coachObj
                 review.owner = request.user.profile
                 review.save()
-                coachObj.get_votes
+                form = ReviewForm()
                 success(request,'Submitted review')
-            context = {'coach' : coachObj, 'form' : form}
-            return render(request,'coach.html',context)
-    return HttpResponse(f'Could not find {pk} coach page.')
+            else:
+                # error(request, 'Could not sent form')
+                form = ReviewForm()
+            coachObj.get_average
+            coachObj.save()
+            context = {'coach' : coachObj, 'forms': form}
+            return render(request, 'coach.html', context)
+    return render(request, 'coach.html')
 
 @login_required(login_url='login')
 def addCoach(request):
