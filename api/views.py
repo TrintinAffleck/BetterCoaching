@@ -43,7 +43,7 @@ def coachReview(request, pk):
     review.rating_value = request.data['rating_value']
     review.body = request.data['body']
     review.save()
-    coach.get_votes
+    coach.get_average
 
     serializer = CoachSerializer(coach, many=False)
     return Response(serializer.data)
