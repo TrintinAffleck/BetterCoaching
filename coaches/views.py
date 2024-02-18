@@ -43,7 +43,7 @@ def coach(request,pk):
             coachObj.save()
             context = {'coach' : coachObj, 'forms': form}
             return render(request, 'coach.html', context)
-    return render(request, 'coach.html')
+    return HttpResponse(f"Could not find coach with name {pk}")
 
 @login_required(login_url='login')
 def addCoach(request):
