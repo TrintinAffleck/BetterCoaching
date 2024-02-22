@@ -1,89 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Better Coaching - Coaches</title>
-  </head>
-  <body>
-    {% extends 'main.html' %} 
-    {% load static %} 
-    {% block content %}
-    <!-- Main Section -->
-    <main class="coaches">
-      <section class="hero-section text-center">
-        <div class="container container--narrow">
-          <div class="hero-section__box">
-            <h2>Search for <span>Coaches</span></h2>
 
-          </div>
-          <!-- Search Section -->
-          <div class="hero-section__search">
-            <form id = "searchForm" class="form" action="{% url 'coaches' %}" method="get">
-              <div class="form__field">
-                <label for="formInput#search">Search By Coaches </label>
-                <input
-                  class="input input--text"
-                  id="formInput#search"
-                  type="text"
-                  name="search_query"
-                  placeholder="Search by Coach Name"
-                  value="{{search_query}}"
-                />
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Better Coaching - Coaches</title>
+</head>
 
-              <input
-                class="btn btn--sub btn--lg"
-                type="submit"
-                value="Search"
-              />
-            </form>
-          </div>
+<body>
+  {% extends 'main.html' %}
+  {% load static %}
+  {% block content %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <!-- Main Section -->
+  <main class="coaches">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+        <div class="display-1 py-3">
+          <h1>Welcome to Better Coaching!</span></h1>
+
         </div>
-      </section>
-      <!-- Search Result: CoachList -->
-      <section class="CoachesList">
-        <div class="container">
-          <div class="grid grid--three">
-            <!-- Card Sections -->
-            {% for coach in coaches %}
-            {% if coach.user.rank and coach.user.division and coach.headline and coach.display_name %}
-            <div class="column">
-              <div class="card coach">
-                <a href="{% url 'coach' coach.display_name %}" class="coach">
-                  <img
-                    class="coach__thumbnail"
-                    src="{{coach.profile_img.url}}"
-                    alt="coach thumbnail"
-                  />
-                  <div class="card__body">
-                    <h3 class="coach__rating" style="margin-bottom: 8px;">{{coach.display_name}}</h3>
-                    <p>{{coach.headline|slice:"60"}}</p>
-                    <div class="coach--rating">
-                      <span style="font-weight: bold">{{coach.rating_ratio|floatformat:2}}</span>
-                      Avg Rating
-                    </div>
-                    <div class="coach--rating">
-                      <span style="font-weight: bold">{{coach.rating_total}}</span>
-                      Review{{coach.rating_total|pluralize:"s"}}
-                    </div>
-                    <div class="coach__tags">
-                      <span class="tag tag--pill tag--main">
-                        Rank: {{coach.user.rank}} {{coach.user.division}}
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              </div>
+        <!-- Search Section -->
+        <div class="hero-section__search my-3 d-flex align-items-center justify-content-center py-3 mt-2">
+          <form class="d-flex align-items-end gap-2 flex-column w-50" id="searchForm" action="{% url 'coaches' %}"
+            method="get">
+            <div class="input-group">
+              <input class="form-control" id="formInput#search" type="text" name="search_query"
+                placeholder="Search by Coach Name" value="{{search_query}}" />
             </div>
-            {% endif %} 
-            {% endfor %}
-          </div>
+
+            <input class="btn btn-outline-secondary" type="submit" value="Search For Coach" />
+          </form>
         </div>
-      </section>
-      {% include 'pagination.html' with queryset=coaches custom_range=custom_range %}
-    </main>
-    {% endblock content %}
-  </body>
+      </div>
+    </section>
+    <!-- Search Result: CoachList -->
+    <!-- Card Sections -->
+    <div class="card-group d-flex justify-content-evenly gap-2">
+      {% for coach in coaches %}
+      {% if coach.user.rank and coach.user.division and coach.headline and coach.display_name %}
+      <!-- Card -->
+      <!-- Using some inline styling here to avoid the borders being cut off on the left -->
+      <div class="card border-dark rounded justify-content-center align-items-center"
+            style="border-left: #212529 solid 1px; ">
+        <a href="{% url 'coach' coach.display_name %}">
+          <img class="card-img-top" src="{{coach.profile_img.url}}" alt="coach thumbnail" />
+        </a>
+        <div class="card-body">
+          <!-- Title -->
+          <h3 class="card-title">{{coach.display_name}}</h3>
+          <p class="card-text">{{coach.headline|slice:"60"}}</p>
+
+          <!-- Rating Average -->
+          <p class="card-text">Avg Rating: {{coach.get_average|floatformat:2}}</p>
+
+          <!-- Rating Total-->
+          <p class="card-text">Review{{coach.rating_total|pluralize:"s: "}}{{coach.rating_total}}</p>
+
+          <!-- Rank -->
+          <p class="tag tag--pill tag--main card-text">
+            Rank: {{coach.user.rank}} {{coach.user.division}}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% include 'pagination.html' with queryset=coaches custom_range=custom_range %}
+  </main>
+  {% endblock content %}
+</body>
+
 </html>
