@@ -1,85 +1,66 @@
-{% extends 'main.html' %} 
-{% block content %} 
+{% extends 'main.html' %}
+{% block content %}
 {% if page == 'register' %}
-<body>
-  <div class="auth">
-    <div class="card">
-      <div class="auth__header text-center">
-        <h3>Account SignUp</h3>
-        <p>Create an account.</p>
-      </div>
-      <form action="{% url 'register' %}" method="POST" class="form auth__form">
-
-        <!-- Fields -->
-        {% csrf_token %} 
-        {% for field in forms %}
-        <div class="form__field">
-          <label for="formInput#text">{{field.label}}</label>
-          {{field}}
-          {% if field.help_text %}
-          <small>{{field.help_text}}</small>
-          {% endif %}
-          {% for error in field.errors %}
-          <p style="color: red;">{{error}}</p>
-          {% endfor %}
-        </div>
-        {% endfor %}
-
-        <div class="auth__actions">
-          <input class="btn btn--sub btn--lg" type="submit" value="Sign Up" />
-        </div>
-      </form>
-      <div class="auth__alternative">
-        <p>Already have an Account?</p>
-        <a href="{% url 'login' %}">Log In</a>
-      </div>
+<!-- REGISTER -->
+<div class="container d-flex justify-content-center">
+  <div class="card px-3">
+    <div class="text-center">
+      <h3>Account SignUp</h3>
+      <p>Create an account.</p>
     </div>
+    <form action="{% url 'register' %}" method="POST" class="form-group d-flex flex-column justify-content-evenly">
+      <!-- Fields -->
+      {% csrf_token %}
+      {% for field in forms %}
+      <label class="form-label">{{field.label}}</label>
+      {{field}}
+      {% if field.help_text %}
+      <small>{{field.help_text}}</small>
+      {% endif %}
+      {% for error in field.errors %}
+      <p style="color: red;">{{error}}</p>
+      {% endfor %}
+      {% endfor %}
+      <button class="btn btn-primary" type="submit">Signup</button>
+      <button class="btn btn-secondary"  type="button" href="{% url 'login' %}">Log In</button>
+      <span class="fs-5">Already have an Account?</span>
+    </form>
+  
   </div>
-</body>
+</div>
 {% else %}
-<body>
-  <div class="auth">
-    <div class="card">
-      <div class="auth__header text-center">
-        <h3>Account Login</h3>
-        <p>Welcome Back!</p>
+<!-- LOGIN -->
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card px-3 text-center">
+    <!-- Welcome -->
+    <h3>Account Login</h3>
+    <p>Welcome Back!</p>
+
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <!-- Input:Name -->
+      <div class="mb-3">
+        <label class="form-label text-start" for="usernameInput">Username: </label>
+        <input class="form-control" id="usernameInput" type="text" name="username"
+          placeholder="Enter your username..." autofocus/>
       </div>
 
-      <form action="" method="POST" class="form auth__form">
-        {% csrf_token %}
-        <!-- Input:Name -->
-        <div class="form__field">
-          <label for="formInput#text">Username: </label>
-          <input
-            class="input input--text"
-            id="formInput#text"
-            type="text"
-            name="username"
-            placeholder="Enter your username..."
-          />
-        </div>
-
-        <!-- Input:Password -->
-        <div class="form__field">
-          <label for="formInput#password">Password: </label>
-          <input
-            class="input input--password"
-            id="formInput#passowrd"
-            type="password"
-            name="password"
-            placeholder=""
-          />
-        </div>
-        <div class="auth__actions">
-          <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
-          <a href="{% url 'reset_password' %}">Forget Password?</a>
-        </div>
-      </form>
-      <div class="auth__alternative">
-        <p>Don't have an account?<a href="{% url 'register' %}"> Sign Up</a></p>
+      <!-- Input:Password -->
+      <div class="mb-3">
+        <label class="form-label" for="passwordInput">Password: </label>
+        <input class="form-control" id="passwordInput" type="password" name="password" />
       </div>
+      <div class="mb-3">
+        <button class="btn btn-outline-dark w-100 mb-2" type="submit">Log In</button>
+        <a href="{% url 'reset_password' %}">Forgot password?</a>
+      </div>
+    </form>
+    
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <span class="fs-5">Don't have an account?</span>
+      <a href="{% url 'register' %}"> Sign Up</a>
     </div>
   </div>
-</body>
-
-{% endif %} {% endblock content %}
+</div>
+{% endif %}
+{% endblock content %}
