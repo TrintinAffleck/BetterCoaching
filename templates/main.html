@@ -14,9 +14,7 @@
     href="{% static 'uikit/styles/uikit.css' %}"
   />
   <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}" />
-  <!-- {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %} -->
+
 
   <!-- Highlight.js Styles -->
   <link
@@ -33,16 +31,23 @@
     {% include 'nav-bar.html' %} 
     {% if messages %} 
     {% for message in messages %}
-    <div class="alert  alert--{{message.tags}}">
-      <li class="alert__message" style="display : block;"> {{message}}</li>
-      <button class="alert__close">⨯</button>
+    {% if message.tags == 'error' %}
+    <div class="alert alert-danger border-red rounded" role="alert">
+      {{message}}
+      <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
     </div>
+    {% else %}
+    <div class="alert alert-{{message.tags}} rounded" role="alert">
+      {{message}}
+    </div>
+    {% endif %}
     {% endfor %} 
     {% endif %} 
     {% block content %} 
     {% endblock content %}
   </body>
-  <script src="{% static 'uikit/app.js' %}"></script>
+
+  <!-- Scripts -->
   <script src="{% static 'js/main.js' %}"></script>
 
 </html>

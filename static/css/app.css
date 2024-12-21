@@ -28,19 +28,19 @@ img {
 /*=======================
   Header Section
 ========================*/
-.header {
+/* .header {
   position: sticky;
   z-index: 111;
   background-color: var(--color-sub);
   padding: 1.5rem 0;
-}
+} */
 
-.header > .container {
+/* .header > .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
+} */
+/* 
 .header__logo > img {
   height: 10rem;
   width: 12.5rem;
@@ -59,25 +59,11 @@ img {
   font-weight: 300;
   height: fit-content;
   width: fit-content;
-}
+} */
 
-.header__menuItem:not(.btn--sub):hover > a.btn--sub {
-  background: var(--color-sub-light);
-  padding: 1rem 3rem;
-  border-radius: 3px;
-}
 
 .toggle-menu > span {
   display: none;
-}
-
-.header__nav input[type="checkbox"] {
-  display: none;
-}
-
-.header__nav input[type="checkbox"]:checked ~ .header__menu {
-  opacity: 1;
-  pointer-events: all;
 }
 
 .coach--thumbnail {
@@ -134,16 +120,16 @@ img {
     transform-origin: 0 0;
   }
 
-  .header__nav
+  /* .header__nav
     input[type="checkbox"]:checked
     + .toggle-menu
     > .toggle-menu__lines::before {
     margin-left: 3px;
     transform: rotate(45deg) scaleX(1.2) translateX(-2px) translateY(-4px);
     visibility: visible;
-  }
+  } */
 
-  .header__nav
+  /* .header__nav
     input[type="checkbox"]:checked
     + .toggle-menu
     > .toggle-menu__lines {
@@ -183,7 +169,7 @@ img {
     border-radius: 3px;
     background: var(--color-sub-light);
   }
-}
+} */
 
 /*=======================
   Hero Section
@@ -848,4 +834,4 @@ img {
   display: flex; 
   flex-direction: column; 
   align-items: center;
-}
+}}

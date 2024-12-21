@@ -76,7 +76,7 @@
                 <form class="form" action="{% url 'coach' coach.display_name %}" method="POST">
                   {% csrf_token %}
                   <p>Choose your rating out of 5 stars.</p>
-                  {% for field in form %}
+                  {% for field in forms %}
                     <div class="form__field">
                       <label for="formInput#textarea">{{field.label}}</label>
                       {{field}}

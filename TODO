@@ -1,8 +1,10 @@
-Fix positive % ratio
 When I use mouse button to go back the message is not read in inbox
 Probably could cleanup a lot of views by adding code into utils.py
 Implement updateCoach view
-Need to fix inbox to be able to send messages and only send them to coaches
 Add unread messages to the nav bar if there is a new message
-Fix the dates in inbox its not the right date its like 7 hours ahead
-
+Fix Masters+ Ranks to not show division
+Fix header menu items to be all the same size
+After leaving a coach review refreshing posts the same review
+Fix coach cards to be all the same size
+Change all html files to bootstrap stuff
+Add a remember me checkbox to the login page

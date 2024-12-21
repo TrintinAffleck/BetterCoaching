@@ -49,7 +49,7 @@ def registerUser(request):
             return redirect('coaches')
         else:
             if request.POST['password1'] != request.POST['password2']:
-                messages.error(request, 'Passwords must match')
+                messages.danger(request, 'Passwords must match')
                 return redirect('register')
             messages.error(
                 request, 'Username is taken. Please try another username.')

@@ -39,35 +39,55 @@
     </section>
     <!-- Search Result: CoachList -->
     <!-- Card Sections -->
-    <div class="card-group d-flex justify-content-evenly gap-2">
+    <div class="container">
+      <div class="row row-cols-{{custom_range}} gap-2">
       {% for coach in coaches %}
       {% if coach.user.rank and coach.user.division and coach.headline and coach.display_name %}
       <!-- Card -->
       <!-- Using some inline styling here to avoid the borders being cut off on the left -->
-      <div class="card border-dark rounded justify-content-center align-items-center"
-            style="border-left: #212529 solid 1px; ">
-        <a href="{% url 'coach' coach.display_name %}">
-          <img class="card-img-top" src="{{coach.profile_img.url}}" alt="coach thumbnail" />
-        </a>
-        <div class="card-body">
-          <!-- Title -->
-          <h3 class="card-title">{{coach.display_name}}</h3>
-          <p class="card-text">{{coach.headline|slice:"60"}}</p>
+        <div class="card border-dark rounded justify-content-center align-items-center col"
+          style="border-left: #212529 solid 1px; ">
+          <a href="{% url 'coach' coach.display_name %}">
+            <img class="card-img-top" src="{{coach.profile_img.url}}" alt="coach thumbnail" />
+          </a>
+          <div class="card-body">
+            <!-- Title -->
+            <h3 class="card-title">{{coach.display_name}}</h3>
+            <p class="card-text">{{coach.headline|slice:"60"}}</p>
 
-          <!-- Rating Average -->
-          <p class="card-text">Avg Rating: {{coach.get_average|floatformat:2}}</p>
+            <!-- Rating Average -->
+            <p class="card-text">Avg Rating: {{coach.get_average|floatformat:2}}</p>
 
-          <!-- Rating Total-->
-          <p class="card-text">Review{{coach.rating_total|pluralize:"s: "}}{{coach.rating_total}}</p>
+            <!-- Rating Total-->
+            <p class="card-text">Review{{coach.rating_total|pluralize:"s: "}}{{coach.rating_total}}</p>
 
-          <!-- Rank -->
-          <p class="tag tag--pill tag--main card-text">
-            Rank: {{coach.user.rank}} {{coach.user.division}}
-          </p>
+            <!-- Rank -->
+            {% if coach.user.rank == "Challenger" %}
+            <span class="badge rounded-pill bg-warning fs-5">
+              Rank: {{coach.user.rank}} {{coach.user.division}}
+            </span>
+            {% elif coach.user.rank == "Grandmaster" %}
+            <span class="badge rounded-pill bg-dark fs-5">
+              Rank: {{coach.user.rank}} {{coach.user.division}}
+            </span>
+            {% elif coach.user.rank == "Master Tier" %}
+            <span class="badge rounded-pill bg-danger fs-5">
+              Rank: {{coach.user.rank}} {{coach.user.division}}
+            </span>
+            {% elif coach.user.rank == "Diamond" %}
+            <span class="badge rounded-pill bg-primary fs-5">
+              Rank: {{coach.user.rank}} {{coach.user.division}}
+            </span>
+            {% else %}
+            <span class="badge rounded-pill bg-secondary fs-5">
+              Rank: {{coach.user.rank}} {{coach.user.division}}
+            </span>
+            {% endif %}
+          </div>
         </div>
+        {% endif %}
+        {% endfor %}
       </div>
-      {% endif %}
-      {% endfor %}
     </div>
     {% include 'pagination.html' with queryset=coaches custom_range=custom_range %}
   </main>

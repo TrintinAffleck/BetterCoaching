@@ -12,7 +12,6 @@ from coaches.utils import paginate_coaches, search_coaches
 from .forms import AccomplishmentForm, AddCoachForm, CoachForm, ReviewForm
 from .models import Coach
 
-coaches_list = Coach.objects.all()
 
 def coaches(request):
     coach_obj, search_query = search_coaches(request)
@@ -25,23 +24,24 @@ def coaches(request):
     return render(request,'coaches_list.html', context)
 
 def coach(request,pk):
-    for coach in coaches_list:
+    for coach in Coach.objects.all():
         if pk.lower() == coach.display_name.lower():
-            coachObj = Coach.objects.get(display_name=pk)
             if request.method == 'POST':
                 form = ReviewForm(request.POST)
-                review = form.save(commit=False)
-                review.coach = coachObj
-                review.owner = request.user.profile
-                review.save()
-                form = ReviewForm()
-                success(request,'Submitted review')
+                if form.is_valid():
+                    review = form.save(commit=False)
+                    review.coach = coach
+                    review.owner = request.user.profile
+                    review.save()
+                    form = ReviewForm()
+                    success(request,'Submitted review')
+                else:
+                    error(request, 'Form was invalid.')
             else:
-                # error(request, 'Could not sent form')
                 form = ReviewForm()
-            coachObj.get_average
-            coachObj.save()
-            context = {'coach' : coachObj, 'forms': form}
+            coach.get_average
+            coach.save()
+            context = {'coach' : coach, 'forms': form}
             return render(request, 'coach.html', context)
     return HttpResponse(f"Could not find coach with name {pk}")
 
