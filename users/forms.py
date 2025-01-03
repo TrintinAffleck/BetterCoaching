@@ -33,7 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
 class UpdateAccountForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'username', 'email',
+        fields = ['name',  'email',
                   'discord_link', 'rank', 'division', 'profile_img']
         labels = {'discord_link': 'Discord',
                   'profile_img' : 'Profile Image',
