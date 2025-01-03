@@ -3,6 +3,7 @@ from django.contrib.messages import success, error
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.core.handlers.wsgi import WSGIRequest
 from .models import Profile
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAdminUser
@@ -13,7 +14,7 @@ from .forms import AccomplishmentForm, AddCoachForm, CoachForm, ReviewForm
 from .models import Coach
 
 
-def coaches(request):
+def coaches(request: WSGIRequest):
     coach_obj, search_query = search_coaches(request)
     custom_range,coaches = paginate_coaches(request, coach_obj, 3)
     for coach in coach_obj:
@@ -23,7 +24,7 @@ def coaches(request):
                'custom_range' : custom_range}
     return render(request,'coaches_list.html', context)
 
-def coach(request,pk):
+def coach(request: WSGIRequest,pk):
     for coach in Coach.objects.all():
         if pk.lower() == coach.display_name.lower():
             if request.method == 'POST':
@@ -46,7 +47,7 @@ def coach(request,pk):
     return HttpResponse(f"Could not find coach with name {pk}")
 
 @login_required(login_url='login')
-def addCoach(request):
+def addCoach(request: WSGIRequest):
     form = AddCoachForm()
     if request.method == 'POST':
         form = AddCoachForm(request.POST)
@@ -79,8 +80,11 @@ def addCoach(request):
     return render(request, 'add-coach-form.html', context)
 
 @login_required(login_url='login')
-def updateCoach(request):
+def updateCoach(request: WSGIRequest):
+    if not request.user.profile.is_coach:
+      return HttpResponse("You are not a coach!")
     profile = request.user.profile
+    
     coach = Coach.objects.get(user=profile)
     form = CoachForm(instance=coach)
     if request.method == 'POST':
@@ -94,7 +98,7 @@ def updateCoach(request):
 
 @login_required(login_url='login')
 @permission_classes([IsAdminUser])
-def deleteCoach(request, pk):
+def deleteCoach(request: WSGIRequest, pk):
     coach = Coach.objects.get(name=pk)
     if request.method == 'POST':
         coach.delete()
@@ -103,7 +107,7 @@ def deleteCoach(request, pk):
     return render(request,'delete_template.html', context)
 
 @login_required(login_url='login')
-def addAccomplishment(request):
+def addAccomplishment(request: WSGIRequest):
     profile = request.user.profile
     form = AccomplishmentForm()
     if request.method == 'POST':
