@@ -2,6 +2,9 @@
 <html lang="en">
   {% extends 'main.html' %}
   {% load static %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,6 +21,7 @@
     <link rel="stylesheet" href="{static 'uikit/styles/uikit.css'}" />
     <link rel="stylesheet" href="{% static 'css/app.css' %}" />
 
+
     <title>Better Coaching - Account</title>
   </head>
   <!-- Main Section -->
@@ -26,7 +30,7 @@
       {% block content %}
       <div class="update_account">
       <h2>Account Page</h2>
-      <form action="{% url 'account' %}" method="POST" class="form auth__form", enctype="multipart/form-data">
+      <form action="{% url 'account' %}" method="POST" class="bootstrap_form form", enctype="multipart/form-data">
         {% csrf_token %} 
         {% for field in form %}
         <div class="form__field">
@@ -42,8 +46,9 @@
         {% endfor %}
 
         <div class="auth__actions">
-          <input class="btn btn--primary" type="submit" value="Update Account" />
+          <button type="submit" class="btn btn-success py-2" >Update Account</button>
         </div>
+
       </div>
       </form>
       {% endblock content %}

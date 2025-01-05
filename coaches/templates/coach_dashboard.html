@@ -1,5 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <div class="update_account">
   <form action="{% url 'update-coach' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %} 
@@ -18,11 +21,7 @@
     {% endfor %}
 
     <div class="auth__actions">
-      <input
-        class="btn btn--sub btn--lg"
-        type="submit"
-        value="Update Coach"
-      />
+      <button class="btn btn-success p-3" type="submit">Update Coach</button>
     </div>
   </form>
 </div>
