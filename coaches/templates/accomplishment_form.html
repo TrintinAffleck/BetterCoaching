@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="formPage my-sm">
+	<div class="content-box">
+		<h1>Accomplishment</h1>
+			<form class="form" method="POST" action="">
+				{% csrf_token %}
+				<!-- Fields -->
+				{% for field in form %}
+				{{field.label}}
+				{{field}}
+				{% endfor %}
+				<!-- Button -->
+				<input type="submit" value="Add Accomplishment" />
+		</form>
+	</div>
+</main>
+
+{% endblock content %}

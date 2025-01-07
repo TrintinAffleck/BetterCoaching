@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% extends 'main.html' %}
+  {% load static %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="{static 'uikit/styles/uikit.css'}" />
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+
+
+    <title>Better Coaching - Account</title>
+  </head>
+  <!-- Main Section -->
+  <body>
+    <main>
+      {% block content %}
+      <div class="update_account">
+      <h2>Account Page</h2>
+      <form action="{% url 'account' %}" method="POST" class="bootstrap_form form", enctype="multipart/form-data">
+        {% csrf_token %} 
+        {% for field in form %}
+        <div class="form__field">
+          <label for="formInput#text">{{field.label}}</label>
+          {{field}}
+          {% if field.help_text %}
+          <small>{{field.help_text}}</small>
+          {% endif %}
+          {% for error in field.errors %}
+          <p style="color: red;">{{error}}</p>
+          {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div class="auth__actions">
+          <button type="submit" class="btn btn-success py-2" >Update Account</button>
+        </div>
+
+      </div>
+      </form>
+      {% endblock content %}
+    </main>
+  </body>
+</html>

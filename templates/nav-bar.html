@@ -5,17 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Better Coaching</title>
+
+    {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
-  <nav class="menu">
-      <ul>
-        <div class="header">
-          <div class="header-links">
-            <li><a href="{% url 'coaches'%}">Home</a></li>
-            <li><a href="{% url 'coaches'%}">Coaches</a></li>
-          </div>
+
+  <!-- Header Section -->
+  <header class="header">
+    <nav class="navbar navbar-expand-lg data-bs-theme=dark bg-dark">
+      <div class="container container-fluid">
+        <a class="navbar-brand" href="{% url 'coaches' %}">
+          <img src="{% static 'images/BG_logo.jpg' %}" alt="BetterCoaching Logo" class="img-fluid img-thumbnail"/>
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto nav-underline align-items-center">
+            {% if user.is_staff %}
+            <li class="nav-item m-3"><a href="{% url 'add-coach' %}" class="btn btn-outline-secondary bg-light">Add Coach</a></li>
+            {% endif %}
+            {% if user.profile.is_coach %}
+            <li class="nav-item m-3"><a href="{% url 'update-coach' %}" class="btn btn-outline-secondary bg-light">Coach Dashboard</a></li>
+            {% endif %}
+            <li class="nav-item m-3"><a href="{% url 'coaches' %}" class="btn btn-outline-secondary bg-light">Coaches</a></li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item m-3"><a href="{% url 'inbox' %}" class="btn btn-outline-secondary bg-light">Inbox</a></li>
+            <li class="nav-item m-3"><a href="{% url 'account'%}" class="btn btn-outline-secondary bg-light">Account</a></li>
+            <li class="nav-item m-3"><a href="{% url 'logout' %}" class="btn btn-outline-secondary bg-light">Logout</a></li>
+            {% if user.profile.profile_img %}
+            <li class="nav-item">
+              <a class="avatar avatar--md">
+                <img src="{{user.profile.profile_img.url}}" alt="avatar thumbnail" class="img-fluid" />
+              </a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li class="nav-item"><a href="{% url 'login' %}" class="btn btn-outline-secondary bg-light">Login/Sign Up</a></li>
+            {% endif %}
+          </ul>
         </div>
-      </ul>
+      </div>
     </nav>
+  </header>
+
 </body>
 </html>

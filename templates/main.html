@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <meta charset="UTF-8" />
+  <meta
+    name="description"
+    content="A coaching platform for League of Legends coaching."
+  />
+
+  <!-- Styles -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'uikit/styles/uikit.css' %}"
+  />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}" />
+
+
+  <!-- Highlight.js Styles -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/night-owl.min.css"
+  />
+
+  <title>BetterCoaching</title>
+  <body>
+    {% include 'nav-bar.html' %} 
+    {% if messages %} 
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <div class="alert alert-danger border-red rounded" role="alert">
+      {{message}}
+      <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-{{message.tags}} rounded" role="alert">
+      {{message}}
+    </div>
+    {% endif %}
+    {% endfor %} 
+    {% endif %} 
+    {% block content %} 
+    {% endblock content %}
+  </body>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+</html>
