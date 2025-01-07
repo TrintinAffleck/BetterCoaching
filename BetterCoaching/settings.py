@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from lib2to3.pytree import Base
 from pathlib import Path
-from os import path
+from os import path, getenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gotcha'
+key = getenv('BETTERCOACHING_SECRET_KEY')
+if key is None:
+  raise Exception("Could not find the secret key!")
+SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'coaches.apps.CoachesConfig',
     'users.apps.UsersConfig',
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [
