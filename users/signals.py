@@ -36,7 +36,7 @@ def CreateProfile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Profile, dispatch_uid="update_user")
 def UpdateUser(sender, instance, created, **kwargs):
     user = instance.user
-    if not created:
+    if not created and user:
         user.first_name = instance.name
         user.username = instance.username
         user.email = instance.email
@@ -44,14 +44,8 @@ def UpdateUser(sender, instance, created, **kwargs):
         user.division = instance.division
         if instance.is_coach:
             try:
-                coach_obj, is_coach = Coach.objects.get_or_create(
-                        user = instance,
-                        display_name = instance.username,
-                        headline = "",
-                        body = "",
-                        discord_link = ""
-                )
-                if is_coach:
+                coach_obj, is_created = Coach.objects.get_or_create(user = instance)
+                if is_created:
                     coach_obj.save()
             except Exception as e:
                 print(e)
