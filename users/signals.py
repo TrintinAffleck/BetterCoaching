@@ -46,10 +46,6 @@ def UpdateUser(sender, instance, created, **kwargs):
             try:
                 coach_obj, is_coach = Coach.objects.get_or_create(
                         user = instance,
-                        display_name = instance.username,
-                        headline = "",
-                        body = "",
-                        discord_link = ""
                 )
                 if is_coach:
                     coach_obj.save()
