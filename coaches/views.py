@@ -47,6 +47,7 @@ def coach(request: WSGIRequest,pk):
     return HttpResponse(f"Could not find coach with name {pk}")
 
 @login_required(login_url='login')
+@permission_classes([IsAdminUser])
 def addCoach(request: WSGIRequest):
     form = AddCoachForm()
     if request.method == 'POST':
