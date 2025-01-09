@@ -1,13 +1,13 @@
 {% extends 'main.html' %}
 
-
+{% block content %}
 
 <main class="formPage my-sm">
   <div class="content-box">
     <h1>Coach Form</h1>
     <div class="formWrapper">
       {% if user.is_superuser %}
-        <form class="form form-group-sm" method="POST" enctype="multipart/form-data">
+      <form class="form form-group-sm" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
         <div class="form__field">
@@ -16,8 +16,9 @@
         </div>
         {% endfor %}
         <button class="btn btn-primary p-2" type="submit" >Create Coach</button>
-        </form>
-        </div>
-      {% endif %}
+      </form>
     </div>
+    {% endif %}
+  </div>
 </main>
+{% endblock %}
