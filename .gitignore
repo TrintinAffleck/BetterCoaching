@@ -3,15 +3,4 @@ BetterCoaching.code-workspace
 staticfiles/**
 BetterCoaching/settings.py
 .vscode/launch.json
-BetterCoaching/__pycache__
-coaches/__pycache__
-users/__pycache__
 db.sqlite3
-coaches/__pycache__/forms.cpython-310.pyc
-coaches/__pycache__/models.cpython-310.pyc
-coaches/__pycache__/urls.cpython-310.pyc
-coaches/__pycache__/utils.cpython-310.pyc
-coaches/__pycache__/views.cpython-310.pyc
-users/__pycache__
-coaches/__pycache__/urls.cpython-310.pyc
-coaches/__pycache__/views.cpython-310.pyc
