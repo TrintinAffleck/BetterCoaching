@@ -30,7 +30,7 @@ PyJWT==2.6.0
 pypiwin32==223
 python-dateutil==2.9.0.post0
 pytz==2024.2
-pywin32==308
+pywin32==307
 PyYAML==6.0
 regex==2022.10.31
 requests==2.32.3
