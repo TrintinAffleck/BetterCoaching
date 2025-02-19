@@ -4,3 +4,4 @@ staticfiles/**
 BetterCoaching/settings.py
 .vscode/launch.json
 db.sqlite3
+db.sqlite3
