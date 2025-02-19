@@ -42,14 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'coaches.apps.CoachesConfig',
     'users.apps.UsersConfig',
-    'django_bootstrap5'
+    'django_bootstrap5',
+    'storages'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,13 +126,17 @@ USE_TZ = True
 
 # Email
 
+email_pass = getenv('EMAIL_PASS')
+if email_pass is None:
+  raise Exception("Could not get Email Password key")
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "t.affleck101@hotmail.com"
 EMAIL_HOST_USER ='t.affleck101@hotmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = email_pass
 
 
 # Static files (CSS, JavaScript, Images)
@@ -150,7 +153,39 @@ MEDIA_ROOT = BASE_DIR / "static/images"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
+public_user_s3_access_id = getenv("AWS_S3_ACCESS_KEY_ID")
+public_user_s3_secret_key = getenv("AWS_S3_SECRET_ACCESS_KEY")
+if not public_user_s3_access_id:
+  raise Exception("Could not get environment key AWS_S3_ACCESS_KEY_ID")
+
+if not public_user_s3_secret_key:
+  raise Exception("Could not get environment key AWS_S3_SECRET_ACCESS_KEY")
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+          "bucket_name":"bettercoaching-bucket",
+          "region_name":"ca-central-1",
+          "access_key":public_user_s3_access_id,
+          "secret_key":public_user_s3_secret_key,
+          
+        },
+    },
+    "staticfiles": {
+      "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+      "OPTIONS": {
+          "bucket_name":"bettercoaching-bucket",
+          "region_name":"ca-central-1",
+          "access_key":public_user_s3_access_id,
+          "secret_key":public_user_s3_secret_key,
+          "querystring_auth":False,
+          "file_overwrite":False 
+      }
+    } 
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
